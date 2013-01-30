@@ -1,0 +1,15 @@
+[submodule "Lyricfy/External/AFNetworking"]
+	path = Lyricfy/External/AFNetworking
+	url = git://github.com/AFNetworking/AFNetworking.git
+[submodule "Lyricfy/External/MagicalRecord"]
+	path = Lyricfy/External/MagicalRecord
+	url = git://github.com/magicalpanda/MagicalRecord.git
+[submodule "Lyricfy/External/INAppStoreWindow"]
+	path = Lyricfy/External/INAppStoreWindow
+	url = git://github.com/indragiek/INAppStoreWindow.git
+[submodule "Lyricfy/External/KGNoise"]
+	path = Lyricfy/External/KGNoise
+	url = git://github.com/kgn/KGNoise.git
+[submodule "Lyricfy/External/Reachability"]
+	path = Lyricfy/External/Reachability
+	url = git://github.com/tonymillion/Reachability.git
