@@ -1,0 +1,304 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A093553416B98BE300F16D54 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A093553316B98BE300F16D54 /* Cocoa.framework */; };
+		A093553E16B98BE300F16D54 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A093553C16B98BE300F16D54 /* InfoPlist.strings */; };
+		A093554016B98BE300F16D54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A093553F16B98BE300F16D54 /* main.m */; };
+		A093554416B98BE300F16D54 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A093554216B98BE300F16D54 /* Credits.rtf */; };
+		A093554716B98BE300F16D54 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A093554616B98BE300F16D54 /* AppDelegate.m */; };
+		A093554A16B98BE300F16D54 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A093554816B98BE300F16D54 /* MainMenu.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A093552F16B98BE300F16D54 /* Lyricfy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lyricfy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A093553316B98BE300F16D54 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		A093553616B98BE300F16D54 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		A093553716B98BE300F16D54 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		A093553816B98BE300F16D54 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A093553B16B98BE300F16D54 /* Lyricfy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Lyricfy-Info.plist"; sourceTree = "<group>"; };
+		A093553D16B98BE300F16D54 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A093553F16B98BE300F16D54 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A093554116B98BE300F16D54 /* Lyricfy-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Lyricfy-Prefix.pch"; sourceTree = "<group>"; };
+		A093554316B98BE300F16D54 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		A093554516B98BE300F16D54 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A093554616B98BE300F16D54 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A093554916B98BE300F16D54 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A093552C16B98BE300F16D54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A093553416B98BE300F16D54 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A093552416B98BE300F16D54 = {
+			isa = PBXGroup;
+			children = (
+				A093553916B98BE300F16D54 /* Lyricfy */,
+				A093553216B98BE300F16D54 /* Frameworks */,
+				A093553016B98BE300F16D54 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A093553016B98BE300F16D54 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A093552F16B98BE300F16D54 /* Lyricfy.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A093553216B98BE300F16D54 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A093553316B98BE300F16D54 /* Cocoa.framework */,
+				A093553516B98BE300F16D54 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A093553516B98BE300F16D54 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A093553616B98BE300F16D54 /* AppKit.framework */,
+				A093553716B98BE300F16D54 /* CoreData.framework */,
+				A093553816B98BE300F16D54 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		A093553916B98BE300F16D54 /* Lyricfy */ = {
+			isa = PBXGroup;
+			children = (
+				A093554516B98BE300F16D54 /* AppDelegate.h */,
+				A093554616B98BE300F16D54 /* AppDelegate.m */,
+				A093554816B98BE300F16D54 /* MainMenu.xib */,
+				A093553A16B98BE300F16D54 /* Supporting Files */,
+			);
+			path = Lyricfy;
+			sourceTree = "<group>";
+		};
+		A093553A16B98BE300F16D54 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A093553B16B98BE300F16D54 /* Lyricfy-Info.plist */,
+				A093553C16B98BE300F16D54 /* InfoPlist.strings */,
+				A093553F16B98BE300F16D54 /* main.m */,
+				A093554116B98BE300F16D54 /* Lyricfy-Prefix.pch */,
+				A093554216B98BE300F16D54 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A093552E16B98BE300F16D54 /* Lyricfy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A093554D16B98BE300F16D54 /* Build configuration list for PBXNativeTarget "Lyricfy" */;
+			buildPhases = (
+				A093552B16B98BE300F16D54 /* Sources */,
+				A093552C16B98BE300F16D54 /* Frameworks */,
+				A093552D16B98BE300F16D54 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Lyricfy;
+			productName = Lyricfy;
+			productReference = A093552F16B98BE300F16D54 /* Lyricfy.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A093552616B98BE300F16D54 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = Lucas;
+			};
+			buildConfigurationList = A093552916B98BE300F16D54 /* Build configuration list for PBXProject "Lyricfy" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = A093552416B98BE300F16D54;
+			productRefGroup = A093553016B98BE300F16D54 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A093552E16B98BE300F16D54 /* Lyricfy */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A093552D16B98BE300F16D54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A093553E16B98BE300F16D54 /* InfoPlist.strings in Resources */,
+				A093554416B98BE300F16D54 /* Credits.rtf in Resources */,
+				A093554A16B98BE300F16D54 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A093552B16B98BE300F16D54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A093554016B98BE300F16D54 /* main.m in Sources */,
+				A093554716B98BE300F16D54 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A093553C16B98BE300F16D54 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A093553D16B98BE300F16D54 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A093554216B98BE300F16D54 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A093554316B98BE300F16D54 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		A093554816B98BE300F16D54 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A093554916B98BE300F16D54 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A093554B16B98BE300F16D54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		A093554C16B98BE300F16D54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		A093554E16B98BE300F16D54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Lyricfy/Lyricfy-Prefix.pch";
+				INFOPLIST_FILE = "Lyricfy/Lyricfy-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A093554F16B98BE300F16D54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Lyricfy/Lyricfy-Prefix.pch";
+				INFOPLIST_FILE = "Lyricfy/Lyricfy-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A093552916B98BE300F16D54 /* Build configuration list for PBXProject "Lyricfy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A093554B16B98BE300F16D54 /* Debug */,
+				A093554C16B98BE300F16D54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A093554D16B98BE300F16D54 /* Build configuration list for PBXNativeTarget "Lyricfy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A093554E16B98BE300F16D54 /* Debug */,
+				A093554F16B98BE300F16D54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A093552616B98BE300F16D54 /* Project object */;
+}
