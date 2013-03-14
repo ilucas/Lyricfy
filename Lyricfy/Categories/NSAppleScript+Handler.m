@@ -20,7 +20,7 @@
     
     for (id obj in parameterList){
         if ([obj isKindOfClass:[NSNumber class]])
-			[_parameterList insertDescriptor:[NSAppleEventDescriptor descriptorWithInt32:[obj int32Value]] atIndex:(index++)];
+			[_parameterList insertDescriptor:[NSAppleEventDescriptor descriptorWithInt32:[obj intValue]] atIndex:(index++)];
         else if ([obj isKindOfClass:[NSString class]])
 			[_parameterList insertDescriptor:[NSAppleEventDescriptor descriptorWithString:obj] atIndex:(index++)];
         else if ([obj isKindOfClass:[NSAppleEventDescriptor class]])
@@ -44,18 +44,17 @@
     va_list args;
     int index = 1;
     NSAppleEventDescriptor *parameterList = [NSAppleEventDescriptor listDescriptor];
-    
     va_start(args, firstParameter);
     for (id arg = firstParameter; arg != nil; arg = va_arg(args, id)){
         if ([arg isKindOfClass:[NSNumber class]])
-			[parameterList insertDescriptor:[NSAppleEventDescriptor descriptorWithInt32:[arg int32Value]] atIndex:(index++)];
+			[parameterList insertDescriptor:[NSAppleEventDescriptor descriptorWithInt32:[arg intValue]] atIndex:(index++)];
         else if ([arg isKindOfClass:[NSString class]])
 			[parameterList insertDescriptor:[NSAppleEventDescriptor descriptorWithString:arg] atIndex:(index++)];
         else if ([arg isKindOfClass:[NSAppleEventDescriptor class]])
 			[parameterList insertDescriptor:arg atIndex:(index++)];
     }
     va_end(args);
-    
+
     NSAppleEventDescriptor *theEvent = [NSAppleEventDescriptor appleEventWithEventClass:typeAppleScript
                                                                                 eventID:kASSubroutineEvent
                                                                        targetDescriptor:nil
