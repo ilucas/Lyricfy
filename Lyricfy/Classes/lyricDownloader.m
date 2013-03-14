@@ -22,6 +22,7 @@
 @end
 
 @implementation lyricDownloader
+@synthesize delegate;
 @synthesize track;
 
 #pragma mark - Lifecycle
@@ -45,7 +46,7 @@
     return self;
 }
 
-- (void)setCompletionBlock:(void (^)(ITrack *_track, NSInteger _responseCode))block{    
+- (void)setCompletionBlock:(void (^)(ITrack *_track, NSInteger _responseCode))block{
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-retain-cycles"
     [super setCompletionBlock:^{
@@ -64,6 +65,11 @@
         return;
     }
     
+    dispatch_sync(dispatch_get_main_queue(),^{
+        if ([self.delegate respondsToSelector:@selector(lyricDownloader:WillBeginProcessingTrack:)])
+            [self.delegate lyricDownloader:self WillBeginProcessingTrack:self.track];
+    });
+    
     NSInteger _responseCode[3] = {0,0,0};
     
     if (lyricWiki){
@@ -79,7 +85,7 @@
         AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
         [op startAndWaitUntilFinished];
         
-        NSLog(@"lyricDownloader: %ld - %@",[[op response] statusCode], [[op response] localizedStatusCode]);
+        //NSLog(@"lyricDownloader: %ld - %@",[[op response] statusCode], [[op response] localizedStatusCode]);
         _responseCode[2] = [[op response] statusCode];
         
         if (_responseCode[2] == 200){
@@ -98,6 +104,11 @@
         responseCode = 404;
     
     [self.track setPassedTheQueue:YES];
+    
+    dispatch_async(dispatch_get_main_queue(),^{//TODO: test if asyn isnt bugging the lifecycle
+        if ([self.delegate respondsToSelector:@selector(lyricDownloader:didFinishedDownloadingLyricForTrack:withResponseCode:)])
+            [self.delegate lyricDownloader:self didFinishedDownloadingLyricForTrack:self.track withResponseCode:responseCode];
+    });
 }
 
 #pragma mark - Helper
@@ -153,7 +164,7 @@
     
     if (!rawHTML)//Prevent: NSScanner: nil string argument
         return nil;
-
+    
 	NSScanner *scanner = [NSScanner scannerWithString:rawHTML];
     NSString *finalString = @"";
 	NSString *foundString = @"";

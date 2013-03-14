@@ -14,7 +14,7 @@
 #import "ITrack.h"
 #import "lyricDownloader.h"
 
-@interface AppController ()
+@interface AppController () <lyricDownloaderDelegate>
 @property (nonatomic, strong) NSMutableArray *array;
 @property (nonatomic, strong) NSMutableArray *idxArray;
 @property (nonatomic, strong) iTunesApplication *iTunesApp;
@@ -98,16 +98,7 @@
                     [arrayController addObject:track];
                     [idxArray addObject:databaseID];
                     lyricDownloader *downloader = [[lyricDownloader alloc] initWithTrack:track];
-                    [downloader setCompletionBlock:^(ITrack *track, NSInteger responseCode){
-                        if (responseCode == 200){
-                            //do something
-                        }else {
-                            NSInteger index = [idxArray indexOfObject:databaseID];
-                            [tableView removeRowAtIndex:index];
-                            [idxArray removeObjectAtIndex:index];
-                            [array removeObjectAtIndex:index];
-                        }
-                    }];
+                    [downloader setDelegate:self];
                     [downloadQueue addOperation:downloader];
                 }
             }
@@ -126,6 +117,24 @@
     iTunesSource *sauce = [[iTunesApp sources] objectAtIndex:0];
     iTunesPlaylist *library = [[sauce playlists] objectAtIndex:1];
     return [library tracks];
+}
+
+#pragma mark - lyricDownloaderDelegate
+
+- (void)lyricDownloader:(lyricDownloader *)lyricDownloader WillBeginProcessingTrack:(ITrack *)track{
+
+}
+
+- (void)lyricDownloader:(lyricDownloader *)lyricDownloader didFinishedDownloadingLyricForTrack:(ITrack *)track withResponseCode:(NSInteger)responseCode{
+    NSInteger index = [idxArray indexOfObject:[NSNumber numberWithInteger:track.databeID]];
+    if (responseCode == 200){
+        //do something
+    }else {
+        //arraycontroller remove arragedobject index
+        [tableView removeRowAtIndex:index];
+        [idxArray removeObjectAtIndex:index];
+        [array removeObjectAtIndex:index];
+    }
 }
 
 #pragma mark - lyricEditorDelegate

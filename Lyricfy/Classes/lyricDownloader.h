@@ -10,10 +10,17 @@
 #import <Foundation/Foundation.h>
 
 @class ITrack;
+@protocol lyricDownloaderDelegate;
 
 @interface lyricDownloader : NSOperation
+@property id<lyricDownloaderDelegate> delegate;
 @property (nonatomic, weak) ITrack *track;
 
 - (id)initWithTrack:(ITrack *)track;
 - (void)setCompletionBlock:(void (^)(ITrack *track, NSInteger responseCode))block;
+@end
+
+@protocol lyricDownloaderDelegate <NSObject>
+- (void)lyricDownloader:(lyricDownloader *)lyricDownloader WillBeginProcessingTrack:(ITrack *)track;
+- (void)lyricDownloader:(lyricDownloader *)lyricDownloader didFinishedDownloadingLyricForTrack:(ITrack *)track withResponseCode:(NSInteger)responseCode;
 @end
