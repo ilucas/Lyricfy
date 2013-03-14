@@ -4,4 +4,27 @@
 
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
+    #import <Quartz/Quartz.h>
+    #import <Carbon/Carbon.h>
+    #import <SystemConfiguration/SystemConfiguration.h>
+    #import <ScriptingBridge/ScriptingBridge.h>
+
+    //Constants
+    #import "Constants.h"
+
+    //Categories
+    #import "NSAppleScript+Handler.h"
+    #import "NSHTTPURLResponse+Extensions.h"
+    #import "NSArray+Extensions.h"
+    #import "NSMutableArray+Extensions.h"
+    #import "NSTimer+Blocks.h"
+
+    #if IN_COMPILING_LION //CGColor method is only avaible in 10.8
+        #import "NSColor+CGColor.h"
+    #endif
+
+    //MagicalRecord
+    #define MR_ENABLE_ACTIVE_RECORD_LOGGING TRUE //TODO:test if MR_ENABLE_ACTIVE_RECORD_LOGGING DEBUG Works
+    #define MR_SHORTHAND
+    #import "CoreData+MagicalRecord.h"
 #endif
