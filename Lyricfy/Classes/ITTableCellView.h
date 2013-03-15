@@ -12,13 +12,11 @@
 @class ITrack;
 
 @interface ITTableCellView : NSTableCellView
-
 @property (weak) IBOutlet NSTextField *name;
 @property (weak) IBOutlet NSTextField *artist;
-@property (weak) IBOutlet NSProgressIndicator *progress;
-
 @property (nonatomic, weak) ITrack *track;
 
-- (void)enableProgressIndicator:(BOOL)flag;
+- (void)startAnimation;
+- (void)stopAnimation;
 
 @end

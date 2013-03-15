@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A035FBED16EFD60F00B6BA5E /* tableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A035FBEC16EFD60F00B6BA5E /* tableViewController.m */; };
 		A03D170E16EAF58700AA2995 /* NSArray+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = A03D170B16EAF58700AA2995 /* NSArray+Extensions.m */; };
 		A03D170F16EAF58700AA2995 /* NSMutableArray+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = A03D170D16EAF58700AA2995 /* NSMutableArray+Extensions.m */; };
 		A062B27B16F1F8EA00CAC65E /* NSTimer+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = A062B27A16F1F8EA00CAC65E /* NSTimer+Blocks.m */; };
@@ -78,6 +77,7 @@
 		A093590316B9927900F16D54 /* MagicalRecord+ShorthandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = A09356DC16B9927800F16D54 /* MagicalRecord+ShorthandSupport.m */; };
 		A093590416B9927900F16D54 /* MagicalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = A09356DE16B9927800F16D54 /* MagicalRecord.m */; };
 		A0AB703316C8205200AE07F2 /* NSOperation+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = A0AB703216C8205200AE07F2 /* NSOperation+Extensions.m */; };
+		A0AE584316F273B7008450A5 /* iTunesHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A0AE584216F273B7008450A5 /* iTunesHelper.m */; };
 		A0CC96D016E221B800E8DA6C /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CC96CF16E221B800E8DA6C /* Quartz.framework */; };
 		A0D1033316C4223E000B6DFF /* RBLClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D1033016C4223E000B6DFF /* RBLClipView.m */; };
 		A0D1033416C4223E000B6DFF /* RBLScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D1033216C4223E000B6DFF /* RBLScrollView.m */; };
@@ -242,6 +242,8 @@
 		A09356E016B9927800F16D54 /* CoreData+MagicalRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreData+MagicalRecord.h"; sourceTree = "<group>"; };
 		A0AB703116C8205200AE07F2 /* NSOperation+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOperation+Extensions.h"; sourceTree = "<group>"; };
 		A0AB703216C8205200AE07F2 /* NSOperation+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOperation+Extensions.m"; sourceTree = "<group>"; };
+		A0AE584116F273B7008450A5 /* iTunesHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iTunesHelper.h; path = Classes/iTunesHelper.h; sourceTree = "<group>"; };
+		A0AE584216F273B7008450A5 /* iTunesHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iTunesHelper.m; path = Classes/iTunesHelper.m; sourceTree = "<group>"; };
 		A0CC96CF16E221B800E8DA6C /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		A0D1032F16C4223E000B6DFF /* RBLClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBLClipView.h; sourceTree = "<group>"; };
 		A0D1033016C4223E000B6DFF /* RBLClipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBLClipView.m; sourceTree = "<group>"; };
@@ -394,6 +396,8 @@
 			isa = PBXGroup;
 			children = (
 				A093557B16B991F300F16D54 /* iTunes.h */,
+				A0AE584116F273B7008450A5 /* iTunesHelper.h */,
+				A0AE584216F273B7008450A5 /* iTunesHelper.m */,
 				A093556316B991B200F16D54 /* ITrack.h */,
 				A093556416B991B200F16D54 /* ITrack.m */,
 				A093556D16B991B300F16D54 /* lyricDownloader.h */,
@@ -752,8 +756,8 @@
 				A08C473F16D8EACA00D98198 /* AppController+Debug.m in Sources */,
 				A03D170E16EAF58700AA2995 /* NSArray+Extensions.m in Sources */,
 				A03D170F16EAF58700AA2995 /* NSMutableArray+Extensions.m in Sources */,
-				A035FBED16EFD60F00B6BA5E /* tableViewController.m in Sources */,
 				A062B27B16F1F8EA00CAC65E /* NSTimer+Blocks.m in Sources */,
+				A0AE584316F273B7008450A5 /* iTunesHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

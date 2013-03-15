@@ -14,7 +14,9 @@
 #import "ITrack.h"
 #import "lyricDownloader.h"
 
-@interface AppController () <lyricDownloaderDelegate>
+@interface AppController () <lyricDownloaderDelegate>{
+    GroupRowItem *groupRow[2];
+}
 @property (nonatomic, strong) NSMutableArray *array;
 @property (nonatomic, strong) NSMutableArray *idxArray;
 @property (nonatomic, strong) iTunesApplication *iTunesApp;
@@ -43,7 +45,11 @@
         //Setup some defaults
         [self setAllowTrackWithLyric:YES];
         [tableView setFloatsGroupRows:YES];
-
+        
+        //Initialize the groupRow
+        groupRow[0] = [[GroupRowItem alloc] initWithTitle:@"Main"];
+        groupRow[1] = [[GroupRowItem alloc] initWithTitle:@"Queue"];
+        
         //Setup the Operation Queue
         downloadQueue = [[NSOperationQueue alloc] init];
         [downloadQueue setMaxConcurrentOperationCount:1];
@@ -95,11 +101,16 @@
                 NSNumber *databaseID = [NSNumber numberWithInteger:currentTrack.databaseID];
                 if (![idxArray containsObject:databaseID]){//check if the track isn't in the queue
                     ITrack *track = [[ITrack alloc] initWithiTunesTrack:currentTrack];
+                    if ([array isEmpty]){
+                        [arrayController addObject:groupRow[1]];
+                        [idxArray addObject:groupRow[1]];
+                        [groupRow[1] setLocation:0];
+                    }
                     [arrayController addObject:track];
                     [idxArray addObject:databaseID];
                     lyricDownloader *downloader = [[lyricDownloader alloc] initWithTrack:track];
                     [downloader setDelegate:self];
-                    [downloadQueue addOperation:downloader];
+                    //[downloadQueue addOperation:downloader];
                 }
             }
         }
@@ -122,13 +133,44 @@
 #pragma mark - lyricDownloaderDelegate
 
 - (void)lyricDownloader:(lyricDownloader *)lyricDownloader WillBeginProcessingTrack:(ITrack *)track{
-
+    NSInteger index = [idxArray indexOfObject:[NSNumber numberWithInteger:track.databeID]];
+    NSInteger column = [tableView columnWithIdentifier:NSTableColumnIdentifier];
+    ITTableCellView *cellView = [tableView viewAtColumn:column row:index makeIfNecessary:NO];
+    
+    if (cellView && [cellView isKindOfClass:[ITTableCellView class]])//test if is not a "Group Row"
+        [cellView startAnimation];
 }
 
 - (void)lyricDownloader:(lyricDownloader *)lyricDownloader didFinishedDownloadingLyricForTrack:(ITrack *)track withResponseCode:(NSInteger)responseCode{
     NSInteger index = [idxArray indexOfObject:[NSNumber numberWithInteger:track.databeID]];
+    NSInteger column = [tableView columnWithIdentifier:NSTableColumnIdentifier];
+    ITTableCellView *cellView = [tableView viewAtColumn:column row:index makeIfNecessary:NO];
+    if (cellView && [cellView isKindOfClass:[ITTableCellView class]])//test if is not a "Group Row"
+        [cellView stopAnimation];
+
     if (responseCode == 200){
-        //do something
+        [tableView beginUpdates];
+        //add the main group
+        if (groupRow[0].location < 0){
+            [groupRow[0] setLocation:0];
+            [arrayController insertObject:groupRow[0] atArrangedObjectIndex:0];
+            [idxArray insertObject:groupRow[0] atIndex:0];
+            groupRow[1].location = 1;//now the "queue group" is temporary in the position 1
+            index += 1;
+        }
+        
+        NSInteger newIndex = groupRow[1].location;
+        groupRow[1].location += 1;//down 1 position
+        
+        [array moveObjectFromIndex:index toIndex:newIndex];
+        [idxArray moveObjectFromIndex:index toIndex:newIndex];
+        [tableView moveRowAtIndex:index toIndex:newIndex];
+        
+        //[tableView removeRowAtIndex:index withAnimation:NSTableViewAnimationEffectGap];
+        //[tableView insertRowAtIndex:newIndex withAnimation:NSTableViewAnimationEffectGap];
+        
+        [tableView endUpdates];
+        [tableView reloadData];
     }else {
         //arraycontroller remove arragedobject index
         [tableView removeRowAtIndex:index];
@@ -189,6 +231,7 @@
     __weak id item = [array objectAtIndex:row];
     if ([item isKindOfClass:GroupRowItemClass()]){
         NSTableCellView *cellView = [sender makeViewWithIdentifier:kGroupCellIdentifier owner:self];
+        [cellView.textField.cell setBackgroundStyle:NSBackgroundStyleRaised];
         [cellView.textField setStringValue:[item title]];
         return cellView;
     }else{
