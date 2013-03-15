@@ -36,10 +36,6 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification{
     //Since applicationDidFinishLaunching: is only called 1 time. we remove the observer
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kApplicationDidFinishLaunching object:nil];
-
-    [_bttLyricWiki setTag:0];
-    [_bttMetroLyric setTag:1];
-    [_bttCustom setTag:2];
 }
 
 - (void)awakeFromNib{
@@ -50,15 +46,13 @@
 
 - (IBAction)applyButton:(id)sender {
     ITSource sauce = ITmetroLyrics; //for now metroLyrics is the default
-    if (_bttCustom.state == NSOnState)
+    if (self.bttCustom.state == NSOnState)
         sauce = ITCustomLyric;
-    else if (_bttLyricWiki.state == NSOnState)
+    else if (self.bttLyricWiki.state == NSOnState)
         sauce = ITLyricWiki;
-    else if (_bttMetroLyric.state == NSOnState)
+    else if (self.bttMetroLyric.state == NSOnState)
         sauce = ITmetroLyrics;
-    
-    //TODO: fix this bug. when called, none button is selectec
-    
+        
     [delegate applyLyric:sauce forTrack:self.track];
     [self reset];
 }
@@ -66,22 +60,22 @@
 - (IBAction)lyricButton:(id)sender{
     switch ([sender tag]){
         case 0://LyricWiki
-            [_bttLyricWiki setState:NSOnState];
-            [_bttMetroLyric setState:NSOffState];
-            [_bttCustom setState:NSOffState];
-            [_textView setString:_track.lyricWiki];
+            [self.bttLyricWiki setState:NSOnState];
+            [self.bttMetroLyric setState:NSOffState];
+            [self.bttCustom setState:NSOffState];
+            [self.textView setString:self.track.lyricWiki];
             break;
         case 1://MetroLyric
-            [_bttLyricWiki setState:NSOffState];
-            [_bttMetroLyric setState:NSOnState];
-            [_bttCustom setState:NSOffState];
-            [_textView setString:_track.metroLyrics];
+            [self.bttLyricWiki setState:NSOffState];
+            [self.bttMetroLyric setState:NSOnState];
+            [self.bttCustom setState:NSOffState];
+            [self.textView setString:self.track.metroLyrics];
             break;
         case 2://Custom
-            [_bttLyricWiki setState:NSOffState];
-            [_bttMetroLyric setState:NSOffState];
-            [_bttCustom setState:NSOnState];
-            [_textView setString:_track.customLyric];
+            [self.bttLyricWiki setState:NSOffState];
+            [self.bttMetroLyric setState:NSOffState];
+            [self.bttCustom setState:NSOnState];
+            [self.textView setString:self.track.customLyric];
             break;
         default:
             break;
@@ -89,18 +83,18 @@
 }
 
 - (void)reset{
-    [_applyButton setHidden:YES];
-    [_textScrollView setHidden:YES];
-    [_textView setString:@""];
+    [self.applyButton setHidden:YES];
+    [self.textScrollView setHidden:YES];
+    [self.textView setString:@""];
 
-    [_bttLyricWiki setHidden:YES];
-    [_bttLyricWiki setState:NSOffState];
+    [self.bttLyricWiki setHidden:YES];
+    [self.bttLyricWiki setState:NSOffState];
     
-    [_bttMetroLyric setHidden:YES];
-    [_bttMetroLyric setState:NSOffState];
+    [self.bttMetroLyric setHidden:YES];
+    [self.bttMetroLyric setState:NSOffState];
     
-    [_bttCustom setHidden:YES];
-    [_bttCustom setState:NSOffState];
+    [self.bttCustom setHidden:YES];
+    [self.bttCustom setState:NSOffState];
 }
 
 #pragma mark - lyricEditorDelegate
@@ -108,30 +102,30 @@
 - (void)setupLyricEditorWithTrack:(ITrack *)track{
     if (track && track.passedTheQueue){
         [self setTrack:track];
-        [_applyButton setHidden:NO];
-        [_textScrollView setHidden:NO];
-        [_bttLyricWiki setHidden:NO];
-        [_bttMetroLyric setHidden:NO];
+        [self.applyButton setHidden:NO];
+        [self.textScrollView setHidden:NO];
+        [self.bttLyricWiki setHidden:NO];
+        [self.bttMetroLyric setHidden:NO];
         
-        if (![_track.lyricWiki isEqualToString:@""]){
-            [_bttLyricWiki setEnabled:YES];
-            [_bttLyricWiki setState:NSOnState];
-            [_textView setString:_track.lyricWiki];
+        if (![self.track.lyricWiki isEqualToString:@""]){
+            [self.bttLyricWiki setEnabled:YES];
+            [self.bttLyricWiki setState:NSOnState];
+            [self.textView setString:self.track.lyricWiki];
         }else{
-            [_bttLyricWiki setEnabled:NO];
-            [_bttLyricWiki setState:NSOffState];
+            [self.bttLyricWiki setEnabled:NO];
+            [self.bttLyricWiki setState:NSOffState];
         }
         
-        if (![_track.metroLyrics isEqualToString:@""]){
-            [_bttMetroLyric setEnabled:YES];
-            if (_bttLyricWiki.state == NSOffState){
-                [_textView setString:_track.metroLyrics];
-                [_bttMetroLyric setState:NSOnState];
+        if (![self.track.metroLyrics isEqualToString:@""]){
+            [self.bttMetroLyric setEnabled:YES];
+            if (self.bttLyricWiki.state == NSOffState){
+                [self.textView setString:self.track.metroLyrics];
+                [self.bttMetroLyric setState:NSOnState];
             }else
-                [_bttMetroLyric setState:NSOffState];
+                [self.bttMetroLyric setState:NSOffState];
         }else{
-            [_bttMetroLyric setEnabled:NO];
-            [_bttMetroLyric setState:NSOffState];
+            [self.bttMetroLyric setEnabled:NO];
+            [self.bttMetroLyric setState:NSOffState];
         }
     }else
         [self reset];
@@ -140,18 +134,16 @@
 #pragma mark - NSTextViewDelegate
 
 - (void)textDidChange:(NSNotification *)notification{
-    [self.track setCustomLyric:_textView.string];
-    //TODO: test if self.track is realy a pointer to the real track?
-    //maybe use @dynamic
-    if ([_bttCustom isHidden]){
-        [_bttCustom setHidden:NO];
+    [self.track setCustomLyric:self.textView.string];
+    if ([self.bttCustom isHidden]){
+        [self.bttCustom setHidden:NO];
         
-        if (_bttLyricWiki.state == NSOnState){
-            if (![[_textView string] isEqualToString:_track.lyricWiki])
-                [self lyricButton:_bttCustom];
-        }else if (_bttMetroLyric.state == NSOnState){
-            if (![[_textView string] isEqualToString:_track.metroLyrics])
-                [self lyricButton:_bttCustom];
+        if (self.bttLyricWiki.state == NSOnState){
+            if (![[self.textView string] isEqualToString:self.track.lyricWiki])
+                [self lyricButton:self.bttCustom];
+        }else if (self.bttMetroLyric.state == NSOnState){
+            if (![[self.textView string] isEqualToString:self.track.metroLyrics])
+                [self lyricButton:self.bttCustom];
         }
     }
 }

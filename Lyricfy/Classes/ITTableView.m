@@ -122,13 +122,13 @@
 }
 
 - (void)removeRowAtIndex:(NSInteger)index withAnimation:(NSTableViewAnimationOptions)animationOptions{
-    NSIndexSet *_index = [NSIndexSet indexSetWithIndex:index];
-    [self removeRowsAtIndexes:_index withAnimation:animationOptions];
+    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:index];
+    [self removeRowsAtIndexes:indexSet withAnimation:animationOptions];
 }
 
 - (void)insertRowAtIndex:(NSInteger)index withAnimation:(NSTableViewAnimationOptions)animationOptions{
-    NSIndexSet *_index = [NSIndexSet indexSetWithIndex:index];
-    [self insertRowsAtIndexes:_index withAnimation:animationOptions];
+    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:index];
+    [self insertRowsAtIndexes:indexSet withAnimation:animationOptions];
 }
 
 @end

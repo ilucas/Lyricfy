@@ -110,7 +110,7 @@
                     [idxArray addObject:databaseID];
                     lyricDownloader *downloader = [[lyricDownloader alloc] initWithTrack:track];
                     [downloader setDelegate:self];
-                    //[downloadQueue addOperation:downloader];
+                    [downloadQueue addOperation:downloader];
                 }
             }
         }
@@ -172,7 +172,7 @@
         [tableView endUpdates];
         [tableView reloadData];
     }else {
-        //arraycontroller remove arragedobject index
+        //TODO: do the same group verification here
         [tableView removeRowAtIndex:index];
         [idxArray removeObjectAtIndex:index];
         [array removeObjectAtIndex:index];
@@ -184,9 +184,31 @@
 - (void)applyLyric:(ITSource)source forTrack:(ITrack *)track{
     NSInteger index = [tableView selectedRow];
     [track setNewLyric:source iTunesApplication:iTunesApp];
+    
+    [tableView beginUpdates];
     [tableView removeRowAtIndex:index];
     [idxArray removeObjectAtIndex:index];
     [array removeObjectAtIndex:index];
+    groupRow[1].location -= 1;//up 1 position
+    
+    NSInteger position = groupRow[0].location + 1;
+    id __weak item = [array objectAtIndex:position];
+    
+    if ([item isKindOfClass:GroupRowItemClass()]){
+        [tableView removeRowAtIndex:position];
+        [idxArray removeObjectAtIndex:position];
+        [array removeObjectAtIndex:position];
+        groupRow[0].location = -1;
+        groupRow[1].location -= 1;//up 1 position
+        
+        if (array.count == 1){//remove the "queue" if is the only item in the TableView
+            [tableView removeRowAtIndex:0];
+            [idxArray removeObjectAtIndex:0];
+            [array removeObjectAtIndex:0];
+            groupRow[1].location = -1;
+        }
+    }
+    [tableView endUpdates];
 }
 
 #pragma mark - Core Data

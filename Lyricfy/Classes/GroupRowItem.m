@@ -11,6 +11,8 @@
 
 @implementation GroupRowItem
 
+#pragma mark - Lifecycle
+
 - (id)init{
     self = [super init];
     if (self) {
@@ -27,6 +29,18 @@
     }
     return self;
 }
+
+#pragma mark - KVC
+
+- (NSString *)name{
+    return nil;
+}
+
+- (NSString *)artist{
+    return nil;
+}
+
+#pragma mark - Extern
 
 Class GroupRowItemClass(){
     return [GroupRowItem class];

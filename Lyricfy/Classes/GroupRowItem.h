@@ -13,6 +13,10 @@
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, assign) NSInteger location;
 
+//Making the Class KVC Compliant so the NSearchField don't throw a exception
+@property (nonatomic, readonly) NSString *name;
+@property (nonatomic, readonly) NSString *artist;
+
 - (id)initWithTitle:(NSString *)title;
 
 Class GroupRowItemClass();

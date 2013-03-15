@@ -15,10 +15,6 @@
 @protocol ITTableViewDelegate <NSTableViewDelegate>
 @optional
 - (BOOL)tableView:(NSTableView *)aTableView shouldDeleteRow:(NSInteger)rowIndex;
-//- (NSView *)tableView:(NSTableView *)sender viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
-//– tableView:didDragTableColumn:
-//- (void)tableView:(NSTableView *)movecell
-
 @end
 
 @interface ITTableView : NSTableView

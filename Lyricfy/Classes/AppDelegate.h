@@ -12,7 +12,6 @@
 @class INAppStoreWindow;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSSplitViewDelegate>
-
 @property (assign) IBOutlet INAppStoreWindow *window;
 @property (weak) IBOutlet NSSplitView *splitView;
 @end
