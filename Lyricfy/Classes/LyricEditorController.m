@@ -7,16 +7,16 @@
 //  Licensed under the New BSD License
 //
 
-#import "lyricEditorController.h"
+#import "LyricEditorController.h"
 #import "ITrack.h"
 #import "iTunes.h"
 
-@interface lyricEditorController ()
+@interface LyricEditorController ()
 @property (nonatomic, weak) ITrack *track;
 - (void)reset;
 @end
 
-@implementation lyricEditorController
+@implementation LyricEditorController
 @synthesize delegate;
 @synthesize track = _track;
 

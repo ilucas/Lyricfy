@@ -27,7 +27,7 @@
 		A093554A16B98BE300F16D54 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A093554816B98BE300F16D54 /* MainMenu.xib */; };
 		A093555916B9916600F16D54 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A093555616B9916600F16D54 /* AppController.m */; };
 		A093555A16B9916600F16D54 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A093555816B9916600F16D54 /* AppDelegate.m */; };
-		A093555E16B9917E00F16D54 /* lyricEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = A093555C16B9917E00F16D54 /* lyricEditorController.m */; };
+		A093555E16B9917E00F16D54 /* LyricEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = A093555C16B9917E00F16D54 /* LyricEditorController.m */; };
 		A093557116B991B300F16D54 /* GroupRowItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A093556216B991B200F16D54 /* GroupRowItem.m */; };
 		A093557216B991B300F16D54 /* ITrack.m in Sources */ = {isa = PBXBuildFile; fileRef = A093556416B991B200F16D54 /* ITrack.m */; };
 		A093557416B991B300F16D54 /* ITTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = A093556816B991B200F16D54 /* ITTableCellView.m */; };
@@ -137,8 +137,8 @@
 		A093555616B9916600F16D54 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppController.m; path = Classes/AppController.m; sourceTree = "<group>"; };
 		A093555716B9916600F16D54 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
 		A093555816B9916600F16D54 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Classes/AppDelegate.m; sourceTree = "<group>"; };
-		A093555B16B9917E00F16D54 /* lyricEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lyricEditorController.h; path = Classes/lyricEditorController.h; sourceTree = "<group>"; };
-		A093555C16B9917E00F16D54 /* lyricEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = lyricEditorController.m; path = Classes/lyricEditorController.m; sourceTree = "<group>"; };
+		A093555B16B9917E00F16D54 /* LyricEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LyricEditorController.h; path = Classes/LyricEditorController.h; sourceTree = "<group>"; };
+		A093555C16B9917E00F16D54 /* LyricEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LyricEditorController.m; path = Classes/LyricEditorController.m; sourceTree = "<group>"; };
 		A093555D16B9917E00F16D54 /* lyricEditorDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lyricEditorDelegate.h; path = Classes/lyricEditorDelegate.h; sourceTree = "<group>"; };
 		A093556116B991B200F16D54 /* GroupRowItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupRowItem.h; path = Classes/GroupRowItem.h; sourceTree = "<group>"; };
 		A093556216B991B200F16D54 /* GroupRowItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GroupRowItem.m; path = Classes/GroupRowItem.m; sourceTree = "<group>"; };
@@ -339,8 +339,8 @@
 				A093555616B9916600F16D54 /* AppController.m */,
 				A08C473D16D8EACA00D98198 /* AppController+Debug.h */,
 				A08C473E16D8EACA00D98198 /* AppController+Debug.m */,
-				A093555B16B9917E00F16D54 /* lyricEditorController.h */,
-				A093555C16B9917E00F16D54 /* lyricEditorController.m */,
+				A093555B16B9917E00F16D54 /* LyricEditorController.h */,
+				A093555C16B9917E00F16D54 /* LyricEditorController.m */,
 				A035FBEB16EFD60F00B6BA5E /* tableViewController.h */,
 				A035FBEC16EFD60F00B6BA5E /* tableViewController.m */,
 				A093555D16B9917E00F16D54 /* lyricEditorDelegate.h */,
@@ -697,7 +697,7 @@
 				A093554016B98BE300F16D54 /* main.m in Sources */,
 				A093555916B9916600F16D54 /* AppController.m in Sources */,
 				A093555A16B9916600F16D54 /* AppDelegate.m in Sources */,
-				A093555E16B9917E00F16D54 /* lyricEditorController.m in Sources */,
+				A093555E16B9917E00F16D54 /* LyricEditorController.m in Sources */,
 				A093557116B991B300F16D54 /* GroupRowItem.m in Sources */,
 				A093557216B991B300F16D54 /* ITrack.m in Sources */,
 				A093557416B991B300F16D54 /* ITTableCellView.m in Sources */,

@@ -10,7 +10,7 @@
 #import <Cocoa/Cocoa.h>
 #import "lyricEditorDelegate.h"
 
-@interface lyricEditorController : NSObject <NSTextViewDelegate, lyricEditorDelegate>
+@interface LyricEditorController : NSObject <NSTextViewDelegate, lyricEditorDelegate>
 
 @property IBOutlet id<lyricEditorControllerDelegate> delegate;
 @property (unsafe_unretained) IBOutlet NSTextView *textView;
