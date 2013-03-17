@@ -10,6 +10,7 @@
 		A03D170E16EAF58700AA2995 /* NSArray+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = A03D170B16EAF58700AA2995 /* NSArray+Extensions.m */; };
 		A03D170F16EAF58700AA2995 /* NSMutableArray+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = A03D170D16EAF58700AA2995 /* NSMutableArray+Extensions.m */; };
 		A062B27B16F1F8EA00CAC65E /* NSTimer+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = A062B27A16F1F8EA00CAC65E /* NSTimer+Blocks.m */; };
+		A0701C5E16F3E260009D1FDD /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0701C5D16F3E260009D1FDD /* TableViewController.m */; };
 		A08C473F16D8EACA00D98198 /* AppController+Debug.m in Sources */ = {isa = PBXBuildFile; fileRef = A08C473E16D8EACA00D98198 /* AppController+Debug.m */; };
 		A08DF4A916B9932B0075E648 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A08DF4A816B9932B0075E648 /* Carbon.framework */; };
 		A08DF4AB16B993310075E648 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A08DF4AA16B993310075E648 /* ScriptingBridge.framework */; };
@@ -97,14 +98,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A035FBEB16EFD60F00B6BA5E /* tableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tableViewController.h; path = Classes/tableViewController.h; sourceTree = "<group>"; };
-		A035FBEC16EFD60F00B6BA5E /* tableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = tableViewController.m; path = Classes/tableViewController.m; sourceTree = "<group>"; };
 		A03D170A16EAF58700AA2995 /* NSArray+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Extensions.h"; sourceTree = "<group>"; };
 		A03D170B16EAF58700AA2995 /* NSArray+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Extensions.m"; sourceTree = "<group>"; };
 		A03D170C16EAF58700AA2995 /* NSMutableArray+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Extensions.h"; sourceTree = "<group>"; };
 		A03D170D16EAF58700AA2995 /* NSMutableArray+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Extensions.m"; sourceTree = "<group>"; };
 		A062B27916F1F8EA00CAC65E /* NSTimer+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Blocks.h"; sourceTree = "<group>"; };
 		A062B27A16F1F8EA00CAC65E /* NSTimer+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Blocks.m"; sourceTree = "<group>"; };
+		A0701C5C16F3E260009D1FDD /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TableViewController.h; path = Classes/TableViewController.h; sourceTree = "<group>"; };
+		A0701C5D16F3E260009D1FDD /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TableViewController.m; path = Classes/TableViewController.m; sourceTree = "<group>"; };
 		A08C473D16D8EACA00D98198 /* AppController+Debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AppController+Debug.h"; path = "Classes/AppController+Debug.h"; sourceTree = "<group>"; };
 		A08C473E16D8EACA00D98198 /* AppController+Debug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "AppController+Debug.m"; path = "Classes/AppController+Debug.m"; sourceTree = "<group>"; };
 		A08DF4A816B9932B0075E648 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
@@ -339,10 +340,10 @@
 				A093555616B9916600F16D54 /* AppController.m */,
 				A08C473D16D8EACA00D98198 /* AppController+Debug.h */,
 				A08C473E16D8EACA00D98198 /* AppController+Debug.m */,
+				A0701C5C16F3E260009D1FDD /* TableViewController.h */,
+				A0701C5D16F3E260009D1FDD /* TableViewController.m */,
 				A093555B16B9917E00F16D54 /* LyricEditorController.h */,
 				A093555C16B9917E00F16D54 /* LyricEditorController.m */,
-				A035FBEB16EFD60F00B6BA5E /* tableViewController.h */,
-				A035FBEC16EFD60F00B6BA5E /* tableViewController.m */,
 				A093555D16B9917E00F16D54 /* lyricEditorDelegate.h */,
 				A093554816B98BE300F16D54 /* MainMenu.xib */,
 				A093557816B991B600F16D54 /* Core Data */,
@@ -758,6 +759,7 @@
 				A03D170F16EAF58700AA2995 /* NSMutableArray+Extensions.m in Sources */,
 				A062B27B16F1F8EA00CAC65E /* NSTimer+Blocks.m in Sources */,
 				A0AE584316F273B7008450A5 /* iTunesHelper.m in Sources */,
+				A0701C5E16F3E260009D1FDD /* TableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

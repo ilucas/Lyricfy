@@ -8,21 +8,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "ITTableView.h"
+#import "TableViewController.h"
 #import "lyricEditorDelegate.h"
 
-@class ITTableView;
-
-@interface AppController : NSObject <ITTableViewDelegate, lyricEditorControllerDelegate>
-
-@property IBOutlet id<lyricEditorDelegate> lyricDelegate;
-@property (weak) IBOutlet ITTableView *tableView;
-@property (weak) IBOutlet NSArrayController *arrayController;
+@interface AppController : NSObject <lyricEditorControllerDelegate>
+@property (nonatomic, weak) IBOutlet TableViewController *tableViewController;
 
 + (id)sharedController;
 
 @end
-
-/* TODO:
- http://blog.shpakovski.com/2011/07/cocoa-popup-window-in-status-bar.html
-*/

@@ -13,12 +13,10 @@
 
 @interface LyricEditorController ()
 @property (nonatomic, weak) ITrack *track;
-- (void)reset;
 @end
 
 @implementation LyricEditorController
 @synthesize delegate;
-@synthesize track = _track;
 
 #pragma mark - Lifecycle
 
@@ -39,7 +37,7 @@
 }
 
 - (void)awakeFromNib{
-    [self reset];
+    [self resetEditorView];
 }
 
 #pragma mark - UI
@@ -54,7 +52,7 @@
         sauce = ITmetroLyrics;
         
     [delegate applyLyric:sauce forTrack:self.track];
-    [self reset];
+    [self resetEditorView];
 }
 
 - (IBAction)lyricButton:(id)sender{
@@ -82,7 +80,7 @@
     }
 }
 
-- (void)reset{
+- (void)resetEditorView{
     [self.applyButton setHidden:YES];
     [self.textScrollView setHidden:YES];
     [self.textView setString:@""];
@@ -128,7 +126,7 @@
             [self.bttMetroLyric setState:NSOffState];
         }
     }else
-        [self reset];
+        [self resetEditorView];
 }
 
 #pragma mark - NSTextViewDelegate

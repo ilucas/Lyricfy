@@ -10,7 +10,7 @@
 #import <Cocoa/Cocoa.h>
 #import "lyricEditorDelegate.h"
 
-@interface LyricEditorController : NSObject <NSTextViewDelegate, lyricEditorDelegate>
+@interface LyricEditorController : NSObject <NSTextViewDelegate>
 
 @property IBOutlet id<lyricEditorControllerDelegate> delegate;
 @property (unsafe_unretained) IBOutlet NSTextView *textView;
@@ -25,4 +25,6 @@
 - (IBAction)applyButton:(id)sender;
 - (IBAction)lyricButton:(id)sender;
 
+- (void)setupLyricEditorWithTrack:(ITrack *)track;
+- (void)resetEditorView;
 @end
