@@ -10,13 +10,6 @@
 #import <Foundation/Foundation.h>
 #import "ITrack.h"
 
-@class lyricEditorController;
-
-@protocol lyricEditorDelegate <NSObject>
-@required
-- (void)setupLyricEditorWithTrack:(ITrack *)track;
-@end
-
 @protocol lyricEditorControllerDelegate <NSObject>
 @required
 - (void)applyLyric:(ITSource)source forTrack:(ITrack *)track;

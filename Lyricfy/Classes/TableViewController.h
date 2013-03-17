@@ -12,7 +12,7 @@
 
 @class LyricEditorController, ITrack, iTunesTrack;
 
-@interface TableViewController : NSObject
+@interface TableViewController : NSObject <ITTableViewDelegate>
 @property (weak) IBOutlet ITTableView *tableView;
 @property (weak) IBOutlet NSArrayController *arrayController;
 @property (weak) IBOutlet LyricEditorController *lyricEditorController;

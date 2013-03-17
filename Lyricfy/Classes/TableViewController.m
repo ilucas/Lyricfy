@@ -64,7 +64,7 @@
         if ([track passedTheQueue])
             [lyricEditorController setupLyricEditorWithTrack:track];
     }else{
-        [lyricEditorController setupLyricEditorWithTrack:nil];
+        [lyricEditorController resetEditorView];
     }
 }
 
