@@ -18,6 +18,7 @@
 }
 
 - (NSURL *)urlFromSource:(ITSource)source;
+- (NSString *)parseLyricWiki:(NSData *)rawData;
 - (NSString *)parseMetroLyric:(NSData *)rawData;
 @end
 
@@ -31,9 +32,9 @@
     self = [super init];
     if (self){
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        lyricWiki = [defaults boolForKey:@"lyricWiki"];
         lyricsFreak = [defaults boolForKey:@"metroLyrics"];
-        metroLyrics = true; //[defaults boolForKey:@"lyricsFreak"];//implemented
+        lyricWiki = true; //[defaults boolForKey:@"lyricWiki"];
+        metroLyrics = false; //[defaults boolForKey:@"lyricsFreak"];
     }
     return self;
 }
@@ -72,14 +73,38 @@
     
     NSInteger _responseCode[3] = {0,0,0};
     
-    if (lyricWiki){
-        
-    }
-    
     if (lyricsFreak){
-        
+        //_responseCode[0]
     }
     
+    if (lyricWiki){
+        NSURLRequest *request = [NSURLRequest requestWithURL:[self urlFromSource:ITLyricWiki]];
+        AFJSONRequestOperation *jop = [[AFJSONRequestOperation alloc] initWithRequest:request];
+        [jop startAndWaitUntilFinished];
+        
+        NSString *lyric = [[jop responseJSON] objectForKey:@"lyrics"];
+        
+        if ([lyric isEqualToString:@"Not found"])
+            _responseCode[1] = 404;
+        else {//now that is know the lyric exist. go to lyricwiki page to get the lyric
+            //lyricWiki can't show us the full lyric by API. so we go to their site grab the full lyric
+            NSURL *url = [NSURL URLWithString:[[jop responseJSON] objectForKey:@"url"]];
+            request = [NSURLRequest requestWithURL:url];
+            AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+            [op startAndWaitUntilFinished];
+            _responseCode[1] = [[op response] statusCode];
+            
+            if (_responseCode[1] == 200) {
+                NSString *lyric = [self parseLyricWiki:op.responseData];
+                //NSLog(@"%@",lyric);
+                if (lyric)
+                    [self.track setLyricWiki:lyric];
+                else
+                    _responseCode[1] = 404;
+            }
+        }
+    }
+        
     if (metroLyrics){
         NSURLRequest *request = [NSURLRequest requestWithURL:[self urlFromSource:ITmetroLyrics]];
         AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
@@ -105,7 +130,7 @@
     
     [self.track setPassedTheQueue:YES];
     
-    dispatch_async(dispatch_get_main_queue(),^{//TODO: test if asyn isnt bugging the lifecycle
+    dispatch_async(dispatch_get_main_queue(),^{
         if ([self.delegate respondsToSelector:@selector(lyricDownloader:didFinishedDownloadingLyricForTrack:withResponseCode:)])
             [self.delegate lyricDownloader:self didFinishedDownloadingLyricForTrack:self.track withResponseCode:responseCode];
     });
@@ -120,8 +145,12 @@
             return nil;
         }
         case ITLyricWiki:{
-            //do something
-            return nil;
+            //URL Formart: lyrics.wikia.com/api.php?fmt=realjson&artist=<#Artist#>&song=<#Song-Name#>
+            NSString *url = [NSString stringWithFormat:@"fmt=realjson&artist=%@&song=%@",self.track.artist,self.track.name];
+            url = [url stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+            url = [@"http://lyrics.wikia.com/api.php?" stringByAppendingString:url];
+            NSLog(@"%@",url);
+            return [NSURL URLWithString:url];
         }
         case ITmetroLyrics:{
             //URL Format: metrolyrics.com/<#Song-Name#>-lyrics-<#Artist#>.html
@@ -129,7 +158,7 @@
             NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\w+"
                                                                                    options:NSRegularExpressionCaseInsensitive
                                                                                      error:nil];
-            __block NSMutableArray *array = [NSMutableArray array];
+            __block NSMutableArray *array = [[NSMutableArray alloc] init];
             
             [regex enumerateMatchesInString:url options:NSMatchingReportProgress range:NSMakeRange(0, url.length)
                                  usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop){
@@ -148,6 +177,34 @@
 }
 
 #pragma mark - Parser
+
+- (NSString *)parseLyricWiki:(NSData *)rawData{
+    NSError *error;
+    NSXMLDocument *document = [[NSXMLDocument alloc] initWithData:rawData options:NSXMLDocumentTidyHTML error:&error];
+    NSXMLElement *rootNode = [document rootElement];
+    NSArray *newItemsNodes = [rootNode nodesForXPath:@"//div[contains(@class,'lyricbox')]" error:&error];
+    NSXMLElement *doc = [newItemsNodes lastObject];
+    NSString *rawHTML = [doc XMLString];
+    
+    NSRange range = [rawHTML rangeOfString:@"</div>" options:NSCaseInsensitiveSearch];
+    NSString *lyric = [rawHTML substringFromIndex:range.location+range.length];
+    
+    //HTML tags to be removed
+    //TODO: remove all the remaining 
+    NSArray *tags = @[@"<br>",@"</br>",@"<i>",@"</i>"];
+    for (NSString *tag in tags){
+        //lyric = [lyric stringByReplacingOccurrencesOfString:tag withString:@""];
+        lyric = [lyric stringByReplacingOccurrencesOfString:tag withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, lyric.length)];
+    }
+    
+    //TODO: do this using regular expression
+    //remove everything after "<!--"
+    NSRange cRange = [lyric rangeOfString:@"<!--" options:NSCaseInsensitiveSearch];
+    lyric = [lyric substringToIndex:cRange.location];
+    
+    return ([lyric isEqualToString:@""] ? nil : lyric);
+    //return lyric;
+}
 
 - (NSString *)parseMetroLyric:(NSData *)rawData{
     NSError *error;
@@ -171,6 +228,7 @@
     NSString *br = @"";
     NSString *start = @"<span class=\"line line-s\" id=\"line_";
 	NSString *end = @"</span>";
+    
 	while ([scanner isAtEnd] == NO) {
 		if ([scanner scanUpToString:start intoString:&br] && [scanner scanString:start intoString:NULL] && [scanner scanUpToString:end intoString:&foundString]) {
             //Replace HTML newline tag with \n
@@ -180,7 +238,7 @@
             NSRange range = NSMakeRange(0, [foundString rangeOfString:@">"].location + 1);
             foundString = [foundString stringByReplacingCharactersInRange:range withString:@""];
             
-            //Remove [From:http://www.metrolyrics.com]
+            //Remove "[From:http://www.metrolyrics.com]"
             if ([foundString rangeOfString:@"<span"].location == NSNotFound)
                 finalString = [finalString stringByAppendingFormat:@"%@\n",foundString];
 		}
