@@ -99,8 +99,7 @@
             NSInteger row = [self selectedRow];
             if (row != -1){
                 if ([[self delegate] respondsToSelector:@selector(tableView:shouldDeleteRow:)]){
-                    if([[self delegate] tableView:self shouldDeleteRow:row])
-                        [self removeRowAtIndex:row];
+                    [[self delegate] tableView:self shouldDeleteRow:row];//don't need to test the result. let's leave TableViewController delete the row
                 }
             }
         }

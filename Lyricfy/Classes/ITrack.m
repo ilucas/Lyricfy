@@ -45,7 +45,7 @@
     return self;
 }
 
-- (void)setNewLyric:(ITSource)source iTunesApplication:(iTunesApplication *)iTunesApp{
+- (void)setNewLyric:(ITSource)source{
     NSString *aLyric;
     
     switch (source){

@@ -23,10 +23,12 @@
 - (id)init{
     self = [super init];
     if (self) {
+        /*
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(applicationDidFinishLaunching:)
                                                      name:kApplicationDidFinishLaunching
                                                    object:nil];
+         */
     }
     return self;
 }
@@ -133,17 +135,17 @@
 
 - (void)textDidChange:(NSNotification *)notification{
     [self.track setCustomLyric:self.textView.string];
-    if ([self.bttCustom isHidden]){
+    
+    if ([self.bttCustom isHidden])
         [self.bttCustom setHidden:NO];
-        
-        if (self.bttLyricWiki.state == NSOnState){
-            if (![[self.textView string] isEqualToString:self.track.lyricWiki])
-                [self lyricButton:self.bttCustom];
-        }else if (self.bttMetroLyric.state == NSOnState){
-            if (![[self.textView string] isEqualToString:self.track.metroLyrics])
-                [self lyricButton:self.bttCustom];
-        }
-    }
+    
+    if (self.bttLyricWiki.state == NSOnState){
+        if (![[self.textView string] isEqualToString:self.track.lyricWiki])
+            [self lyricButton:self.bttCustom];
+    } else if (self.bttMetroLyric.state == NSOnState){
+        if (![[self.textView string] isEqualToString:self.track.metroLyrics])
+            [self lyricButton:self.bttCustom];
+    }    
 }
 
 @end

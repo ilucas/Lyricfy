@@ -13,3 +13,7 @@ static NSString *const kiTunesIdentifier[2] = {@"com.apple.iTunes", @"com.apple.
 static NSString *const NSTableColumnIdentifier = @"NSTableColumnIdentifier";
 static NSString *const kGroupCellIdentifier = @"GroupCell";
 static NSString *const kTrackCellIdentifier = @"TrackCell";
+
+static NSString *const kLyricWiki = @"lyricWiki";
+static NSString *const kMetroLyrics = @"metroLyrics";
+static NSString *const kLyricsFreak = @"lyricsFreak";

@@ -124,7 +124,7 @@
 #pragma mark - lyricEditorDelegate
 
 - (void)applyLyric:(ITSource)source forTrack:(ITrack *)track{
-    [track setNewLyric:source iTunesApplication:iTunesApp];
+    [track setNewLyric:source];
     NSInteger index = [tableViewController.tableView selectedRow];
     [tableViewController removeTrackAtIndex:index];
 }

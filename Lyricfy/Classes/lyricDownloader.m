@@ -32,9 +32,9 @@
     self = [super init];
     if (self){
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        lyricsFreak = [defaults boolForKey:@"metroLyrics"];
-        lyricWiki = true; //[defaults boolForKey:@"lyricWiki"];
-        metroLyrics = false; //[defaults boolForKey:@"lyricsFreak"];
+        lyricsFreak = [defaults boolForKey:kLyricsFreak];
+        lyricWiki = true; //[defaults boolForKey:kLyricWiki];
+        metroLyrics = false; //[defaults boolForKey:kMetroLyrics];
     }
     return self;
 }

@@ -43,6 +43,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect{
     [super drawRect:dirtyRect];
+    
     if ([self.animationTimer isValid]) {
         self.moveFactor = (self.moveFactor > 14.0f ? 0.0f : ++self.moveFactor);
         

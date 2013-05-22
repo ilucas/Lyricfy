@@ -39,7 +39,7 @@ typedef short ITSource;
 
 //+ (ITrack *)trackWithDatabaseID:(NSInteger)databaseID musicPlayList:(SBElementArray *)playlist;
 
-- (void)setNewLyric:(ITSource)source iTunesApplication:(iTunesApplication *)iTunesApp;
+- (void)setNewLyric:(ITSource)source;
 
 + (BOOL)validateLyricForTrack:(iTunesTrack *)track;
 

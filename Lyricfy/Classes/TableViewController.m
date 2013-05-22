@@ -103,9 +103,7 @@
 
 //delegate called when pressed the delete key on the TableView
 - (BOOL)tableView:(NSTableView *)sender shouldDeleteRow:(NSInteger)rowIndex{
-    //since a "Group Row" can't be selected, there's no need to test if is a "Group Row"
-    [idxArray removeObjectAtIndex:rowIndex];
-    [array removeObjectAtIndex:rowIndex];
+    [self removeTrackAtIndex:rowIndex];
     return YES;
 }
 
@@ -130,8 +128,7 @@
 - (void)removeTrackAtIndex:(NSInteger)index{
     if ([[array objectAtIndex:index] isKindOfClass:GroupRowItemClass()])
         return;//only remove tracks
-        
-    [tableView beginUpdates];
+    
     [tableView removeRowAtIndex:index];
     [idxArray removeObjectAtIndex:index];
     [array removeObjectAtIndex:index];
@@ -155,8 +152,8 @@
             groupRow[1].location = -1;
         }
     }
-    [tableView endUpdates];
-    //[tableView reloadData];
+
+    [tableView reloadData];
 }
 
 - (void)moveTrackUp:(NSInteger)index{
@@ -182,20 +179,20 @@
     [tableView insertRowAtIndex:newIndex withAnimation:NSTableViewAnimationEffectGap];
     
     [tableView endUpdates];
-    //[tableView reloadData];   
+    [tableView reloadData];   
 }
 
 - (void)startRowAnimationAtIndex:(NSInteger)index{
     NSInteger column = [tableView columnWithIdentifier:NSTableColumnIdentifier];
     ITTableCellView *cellView = [tableView viewAtColumn:column row:index makeIfNecessary:NO];
-    if (cellView && [cellView isKindOfClass:[ITTableCellView class]])//let's not animate a "Group Row"
+    if (cellView && ![cellView isKindOfClass:GroupRowItemClass()])//let's not animate a "Group Row"
         [cellView startAnimation];
 }
 
 - (void)stopRowAnimationAtIndex:(NSInteger)index{
     NSInteger column = [tableView columnWithIdentifier:NSTableColumnIdentifier];
     ITTableCellView *cellView = [tableView viewAtColumn:column row:index makeIfNecessary:NO];
-    if (cellView && [cellView isKindOfClass:[ITTableCellView class]])//let's not animate a "Group Row"
+    if (cellView && ![cellView isKindOfClass:GroupRowItemClass()])//let's not animate a "Group Row"
         [cellView stopAnimation];
 }
 
