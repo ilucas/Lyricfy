@@ -29,7 +29,7 @@
         //Add a observer to applicationDidFinishLaunching
         //[[NSNotificationCenter defaultCenter] addObserver:self
         //                                         selector:@selector(applicationDidFinishLaunching:)
-        //                                             name:kApplicationDidFinishLaunching
+        //                                             name:NSApplicationDidFinishLaunchingNotification
         //                                           object:nil];
         
         //TableView content array
@@ -47,7 +47,7 @@
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kApplicationDidFinishLaunching object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSApplicationDidFinishLaunchingNotification object:nil];
     
 }
 

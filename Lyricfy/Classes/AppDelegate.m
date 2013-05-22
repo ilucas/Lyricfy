@@ -44,8 +44,6 @@ static const CGFloat SVmaxConstrain = 470.0;
     //DEV: show Constraints Helper
     //[[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
     
-    //Let's share the applicationDidFinishLaunching
-    [[NSNotificationCenter defaultCenter] postNotificationName:kApplicationDidFinishLaunching object:aNotification];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification{

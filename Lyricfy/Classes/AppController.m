@@ -46,11 +46,12 @@
                                                                 name:kiTunesIdentifier[1]
                                                               object:nil];
         
-        //Add a observer to applicationDidFinishLaunching
+        //Add a observer to applicationDidFinishLaunching        
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(applicationDidFinishLaunching:)
-                                                     name:kApplicationDidFinishLaunching
+                                                     name:NSApplicationDidFinishLaunchingNotification
                                                    object:nil];
+
     }
     return self;
 }
@@ -60,8 +61,8 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification{
     //Since applicationDidFinishLaunching is only called 1 time. we remove the observer
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kApplicationDidFinishLaunching object:nil];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSApplicationDidFinishLaunchingNotification object:nil];
+        
 #if DEBUG
     [self activateDebugMenu];
 #endif
