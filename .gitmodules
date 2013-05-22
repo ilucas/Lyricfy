@@ -13,3 +13,6 @@
 [submodule "Lyricfy/External/Reachability"]
 	path = Lyricfy/External/Reachability
 	url = git://github.com/tonymillion/Reachability.git
+[submodule "Lyricfy/External/MASPreferences"]
+	path = Lyricfy/External/MASPreferences
+	url = git://github.com/shpakovski/MASPreferences.git
