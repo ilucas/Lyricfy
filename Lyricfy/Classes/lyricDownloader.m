@@ -1,4 +1,4 @@
-//
+ //
 //  lyricDownloader.m
 //  Lyricfy
 //
@@ -65,7 +65,7 @@
         [self cancel];
         return;
     }
-    
+
     dispatch_sync(dispatch_get_main_queue(),^{
         if ([self.delegate respondsToSelector:@selector(lyricDownloader:WillBeginProcessingTrack:)])
             [self.delegate lyricDownloader:self WillBeginProcessingTrack:self.track];
@@ -200,7 +200,8 @@
     //TODO: do this using regular expression
     //remove everything after "<!--"
     NSRange cRange = [lyric rangeOfString:@"<!--" options:NSCaseInsensitiveSearch];
-    lyric = [lyric substringToIndex:cRange.location];
+    if (cRange.location != NSNotFound)//temporary fix
+        lyric = [lyric substringToIndex:cRange.location];
     
     return ([lyric isEqualToString:@""] ? nil : lyric);
     //return lyric;

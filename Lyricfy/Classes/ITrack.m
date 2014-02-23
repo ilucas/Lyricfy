@@ -89,6 +89,7 @@
 
 - (void)applyLyricUsingAppleScript:(NSString *)aLyric{
     NSLog(@"Apply lyric using AppleScript");
+    //return;
     NSBundle *bundle = [NSBundle mainBundle];
     NSURL *scriptURL = [[NSURL alloc] initFileURLWithPath:[bundle pathForResource:@"LyricScript" ofType:@"scpt"]];
     NSAppleScript *script = [[NSAppleScript alloc] initWithContentsOfURL:scriptURL error:nil];

@@ -80,14 +80,14 @@
     return ([item isKindOfClass:GroupRowItemClass()] ? NO : [item passedTheQueue]);
 }
 
-// The "group rows" have a small height, while all other rows have a larger height
-- (CGFloat)tableView:(NSTableView *)sender heightOfRow:(NSInteger)row {
+//The "group rows" have a small height, while all other rows have a larger height
+- (CGFloat)tableView:(NSTableView *)sender heightOfRow:(NSInteger)row{
     __weak id item = [array objectAtIndex:row];
     static const CGFloat GroupRowHeight = 20.0;
     return ([item isKindOfClass:GroupRowItemClass()] ? GroupRowHeight : sender.rowHeight);
 }
 
-- (NSView *)tableView:(NSTableView *)sender viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+- (NSView *)tableView:(NSTableView *)sender viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row{
     __weak id item = [array objectAtIndex:row];
     if ([item isKindOfClass:GroupRowItemClass()]){
         NSTableCellView *cellView = [sender makeViewWithIdentifier:kGroupCellIdentifier owner:self];
@@ -129,36 +129,57 @@
     if ([[array objectAtIndex:index] isKindOfClass:GroupRowItemClass()])
         return;//only remove tracks
     
-    [tableView removeRowAtIndex:index];
+    //NSLog(@"RTAI: %@",([NSThread isMainThread] ? @"main thread": @"other thread" ));
+    //NSLog(@"RTAI: array = %ld - idx = %ld",array.count,idxArray.count);
+    
     [idxArray removeObjectAtIndex:index];
     [array removeObjectAtIndex:index];
-    
+    [tableView removeRowAtIndex:index];
     groupRow[1].location -= 1;//up 1 position
     
     NSInteger position = groupRow[0].location + 1;
     __weak id item = [array objectAtIndex:position];
     
     if ([item isKindOfClass:GroupRowItemClass()]){
-        [tableView removeRowAtIndex:position];
         [idxArray removeObjectAtIndex:position];
         [array removeObjectAtIndex:position];
+        [tableView removeRowAtIndex:position];
         groupRow[0].location = -1;
         groupRow[1].location -= 1;//up 1 position
         
         if (array.count == 1){//remove the "queue" if is the only item in the TableView
-            [tableView removeRowAtIndex:0];
             [idxArray removeObjectAtIndex:0];
             [array removeObjectAtIndex:0];
+            [tableView removeRowAtIndex:0];
             groupRow[1].location = -1;
         }
     }
+}
 
-    [tableView reloadData];
+- (void)logArray{
+    [array enumerateObjectsUsingBlock:^(id objj, NSUInteger idxx, BOOL *stop){
+        if ([objj isKindOfClass:GroupRowItemClass()]){
+            GroupRowItem *i = objj;
+            NSLog(@"%ld - %@",idxx,[i name]);
+        }else{
+            ITrack *i = objj;
+            NSLog(@"%ld - %@",idxx,[i name]);
+        }
+    }];
+    
+    [idxArray enumerateObjectsUsingBlock:^(id objj, NSUInteger idxx, BOOL *stop){
+        if ([objj isKindOfClass:GroupRowItemClass()]){
+            GroupRowItem *i = array[idxx];
+            NSLog(@"%ld - %@",idxx,[i name]);
+        }else{
+            ITrack *i = array[idxx];
+            NSLog(@"%ld - %@",idxx,[i name]);
+        }
+    }];
 }
 
 - (void)moveTrackUp:(NSInteger)index{
-    [tableView beginUpdates];
-    //add the main group
+    //add the "main group"
     if (groupRow[0].location < 0){
         [groupRow[0] setLocation:0];
         [arrayController insertObject:groupRow[0] atArrangedObjectIndex:0];
@@ -169,17 +190,34 @@
     
     NSInteger newIndex = groupRow[1].location;
     groupRow[1].location += 1;//down 1 position
-    
+        
     [array moveObjectFromIndex:index toIndex:newIndex];
     [idxArray moveObjectFromIndex:index toIndex:newIndex];
+    [tableView moveRowAtIndex:index toIndex:newIndex];
     
-    //[tableView moveRowAtIndex:index toIndex:newIndex];
+
+    __weak id item = [array lastObject];
+    NSInteger pos = [array indexOfObject:item];
+    NSLog(@"%ld , %ld",array.count,pos);
     
-    [tableView removeRowAtIndex:index withAnimation:NSTableViewAnimationEffectGap];
-    [tableView insertRowAtIndex:newIndex withAnimation:NSTableViewAnimationEffectGap];
     
-    [tableView endUpdates];
-    [tableView reloadData];   
+    return;
+    if ([item isKindOfClass:GroupRowItemClass()]){
+        NSInteger idx = [array count];
+        
+        //NSLog(@"idx = %ld - count = %ld",idx);
+        
+        return;
+        __weak id item2 = [array objectAtIndex:idx];
+        
+        if (item == item2)
+            NSLog(@"igual");
+        return;
+        [array removeObjectAtIndex:idx];
+        [idxArray removeObjectAtIndex:idx];
+        [tableView removeRowAtIndex:idx];
+        [groupRow[1] setLocation:-1];
+    }
 }
 
 - (void)startRowAnimationAtIndex:(NSInteger)index{

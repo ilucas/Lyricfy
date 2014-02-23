@@ -10,12 +10,17 @@
 #import "AppDelegate.h"
 #import "INAppStoreWindow.h"
 #import "KGNoise.h"
+#import "PreferencesWindowController.h"
 
 static const CGFloat SVminConstrain = 296.0;
 static const CGFloat SVmaxConstrain = 470.0;
 
+@interface AppDelegate ()
+@property (strong) PreferencesWindowController *preferencesWindowController;
+@end
+
 @implementation AppDelegate
-@synthesize window, splitView;
+@synthesize window, splitView, applyAllButton, preferencesWindowController;
 
 #pragma mark - Lifecycle
 
@@ -35,11 +40,13 @@ static const CGFloat SVmaxConstrain = 470.0;
     [editorSide setBackgroundColor:[NSColor windowBackgroundColor]];
     [editorSide setNoiseOpacity:0.3];
     [editorSide setNoiseBlendMode:kCGBlendModeScreen];
-    
-    [tableSide setBackgroundColor:[NSColor blackColor]];
+
+    [tableSide setBackgroundColor:[NSColor blackColor]];//dev
     
     //Setup CoreData using Magical Records
     //[MagicalRecord setupCoreDataStack];
+    
+    preferencesWindowController = [[PreferencesWindowController alloc] init];
     
     //DEV: show Constraints Helper
     //[[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
@@ -93,9 +100,28 @@ static const CGFloat SVmaxConstrain = 470.0;
     [sender adjustSubviews];
 }
 
+- (void)splitViewDidResizeSubviews:(NSNotification *)notification{
+    [[applyAllButton superview] setNeedsDisplay:YES];
+    
+    NSRect oldFrame = [applyAllButton frame];
+    NSView *tableSide = [[splitView subviews] objectAtIndex:0];
+    
+    CGFloat newOriginX = tableSide.frame.size.width - applyAllButton.frame.size.width;
+    NSRect newFrame = NSMakeRect(newOriginX, oldFrame.origin.y, oldFrame.size.width, oldFrame.size.height);
+    
+    [applyAllButton setFrame:newFrame];
+    [applyAllButton setNeedsDisplay:YES];
+}
+
 CGFloat lockedPositionForSplitView(NSSplitView *sender) {
     NSRect frame = [[[sender subviews] objectAtIndex:0] frame];
     return frame.size.width;
+}
+
+#pragma mark - PreferencesWindowController
+
+- (IBAction)openPreferences:(id)sender{
+    [preferencesWindowController showWindow:nil];
 }
 
 @end

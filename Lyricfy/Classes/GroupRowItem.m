@@ -33,7 +33,7 @@
 #pragma mark - KVC
 
 - (NSString *)name{
-    return nil;
+    return self.title;
 }
 
 - (NSString *)artist{

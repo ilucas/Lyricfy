@@ -14,4 +14,6 @@
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSSplitViewDelegate>
 @property (assign) IBOutlet INAppStoreWindow *window;
 @property (weak) IBOutlet NSSplitView *splitView;
+@property (weak) IBOutlet NSButton *applyAllButton;
+
 @end
