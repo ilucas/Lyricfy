@@ -1,12 +1,17 @@
 /*
  * iTunes.h
+ * Based on iTunes 11.1.3
+ *
+ * Creating iTunes.h
+ * sdef /Applications/iTunes.app | sdp -fh --basename iTunes
+ *
  */
 
 #import <AppKit/AppKit.h>
 #import <ScriptingBridge/ScriptingBridge.h>
 
 
-@class iTunesPrintSettings, iTunesApplication, iTunesItem, iTunesArtwork, iTunesEncoder, iTunesEQPreset, iTunesPlaylist, iTunesAudioCDPlaylist, iTunesDevicePlaylist, iTunesLibraryPlaylist, iTunesRadioTunerPlaylist, iTunesSource, iTunesTrack, iTunesAudioCDTrack, iTunesDeviceTrack, iTunesFileTrack, iTunesSharedTrack, iTunesURLTrack, iTunesUserPlaylist, iTunesFolderPlaylist, iTunesVisual, iTunesWindow, iTunesBrowserWindow, iTunesEQWindow, iTunesPlaylistWindow;
+@class iTunesPrintSettings, iTunesApplication, iTunesItem, iTunesAirPlayDevice, iTunesArtwork, iTunesEncoder, iTunesEQPreset, iTunesPlaylist, iTunesAudioCDPlaylist, iTunesLibraryPlaylist, iTunesRadioTunerPlaylist, iTunesSource, iTunesTrack, iTunesAudioCDTrack, iTunesFileTrack, iTunesSharedTrack, iTunesURLTrack, iTunesUserPlaylist, iTunesFolderPlaylist, iTunesVisual, iTunesWindow, iTunesBrowserWindow, iTunesEQWindow, iTunesPlaylistWindow;
 
 enum iTunesEKnd {
 	iTunesEKndTrackListing = 'kTrk' /* a basic listing of tracks within a playlist */,
@@ -49,7 +54,6 @@ enum iTunesESrc {
 	iTunesESrcIPod = 'kPod',
 	iTunesESrcAudioCD = 'kACD',
 	iTunesESrcMP3CD = 'kMCD',
-	iTunesESrcDevice = 'kDev',
 	iTunesESrcRadioTuner = 'kTun',
 	iTunesESrcSharedLibrary = 'kShd',
 	iTunesESrcUnknown = 'kUnk'
@@ -75,7 +79,6 @@ enum iTunesESpK {
 	iTunesESpKLibrary = 'kSpL',
 	iTunesESpKMovies = 'kSpI',
 	iTunesESpKMusic = 'kSpZ',
-	iTunesESpKPartyShuffle = 'kSpS',
 	iTunesESpKPodcasts = 'kSpP',
 	iTunesESpKPurchasedMusic = 'kSpM',
 	iTunesESpKTVShows = 'kSpT'
@@ -84,6 +87,7 @@ typedef enum iTunesESpK iTunesESpK;
 
 enum iTunesEVdK {
 	iTunesEVdKNone = 'kNon' /* not a video or unknown video kind */,
+	iTunesEVdKHomeVideo = 'kVdH' /* home video track */,
 	iTunesEVdKMovie = 'kVdM' /* movie track */,
 	iTunesEVdKMusicVideo = 'kVdV' /* music video track */,
 	iTunesEVdKTVShow = 'kVdT' /* TV show track */
@@ -96,11 +100,21 @@ enum iTunesERtK {
 };
 typedef enum iTunesERtK iTunesERtK;
 
+enum iTunesEAPD {
+	iTunesEAPDComputer = 'kAPC',
+	iTunesEAPDAirPortExpress = 'kAPX',
+	iTunesEAPDAppleTV = 'kAPT',
+	iTunesEAPDAirPlayDevice = 'kAPO',
+	iTunesEAPDUnknown = 'kAPU'
+};
+typedef enum iTunesEAPD iTunesEAPD;
+
 
 
 /*
  * Standard Suite
  */
+
 @interface iTunesPrintSettings : SBObject
 
 @property (readonly) NSInteger copies;  // the number of copies of a document to be printed
@@ -126,15 +140,16 @@ typedef enum iTunesERtK iTunesERtK;
 @end
 
 
-
 /*
  * iTunes Suite
  */
 
-#pragma mark
+#pragma mark -
+
 // The application program
 @interface iTunesApplication : SBApplication
 
+- (SBElementArray *) AirPlayDevices;
 - (SBElementArray *) browserWindows;
 - (SBElementArray *) encoders;
 - (SBElementArray *) EQPresets;
@@ -144,6 +159,9 @@ typedef enum iTunesERtK iTunesERtK;
 - (SBElementArray *) visuals;
 - (SBElementArray *) windows;
 
+@property (readonly) BOOL AirPlayEnabled;  // is AirPlay currently enabled?
+@property (readonly) BOOL converting;  // is a track currently being converted?
+@property (copy) NSArray *currentAirPlayDevices;  // the currently selected AirPlay device(s)
 @property (copy) iTunesEncoder *currentEncoder;  // the currently selected encoder (MP3, AIFF, WAV, etc.)
 @property (copy) iTunesEQPreset *currentEQPreset;  // the currently selected equalizer preset
 @property (copy, readonly) iTunesPlaylist *currentPlaylist;  // the playlist containing the currently targeted track
@@ -157,7 +175,7 @@ typedef enum iTunesERtK iTunesERtK;
 @property BOOL fullScreen;  // are visuals displayed using the entire screen?
 @property (copy, readonly) NSString *name;  // the name of the application
 @property BOOL mute;  // has the sound output been muted?
-@property NSInteger playerPosition;  // the player’s position within the currently playing track in seconds.
+@property double playerPosition;  // the player’s position within the currently playing track in seconds
 @property (readonly) iTunesEPlS playerState;  // is iTunes stopped, paused, or playing?
 @property (copy, readonly) SBObject *selection;  // the selection visible to the user
 @property NSInteger soundVolume;  // the sound output volume (0 = minimum, 100 = maximum)
@@ -189,7 +207,8 @@ typedef enum iTunesERtK iTunesERtK;
 
 @end
 
-#pragma mark
+#pragma mark -
+
 // an item
 @interface iTunesItem : SBObject
 
@@ -197,7 +216,8 @@ typedef enum iTunesERtK iTunesERtK;
 - (NSInteger) id;  // the id of the item
 @property (readonly) NSInteger index;  // The index of the item in internal application order.
 @property (copy) NSString *name;  // the name of the item
-@property (copy, readonly) NSString *persistentID;  // the id of the item as a hexidecimal string. This id does not change over time.
+@property (copy, readonly) NSString *persistentID;  // the id of the item as a hexadecimal string. This id does not change over time.
+@property (copy) NSDictionary *properties;  // every property of the item
 
 - (void) printPrintDialog:(BOOL)printDialog withProperties:(iTunesPrintSettings *)withProperties kind:(iTunesEKnd)kind theme:(NSString *)theme;  // Print the specified object(s)
 - (void) close;  // Close an object
@@ -210,7 +230,26 @@ typedef enum iTunesERtK iTunesERtK;
 
 @end
 
-#pragma mark
+#pragma mark -
+
+// an AirPlay device
+@interface iTunesAirPlayDevice : iTunesItem
+
+@property (readonly) BOOL active;  // is the device currently being played to?
+@property (readonly) BOOL available;  // is the device currently available?
+@property (readonly) iTunesEAPD kind;  // the kind of the device
+@property (copy, readonly) NSString *networkAddress;  // the network (MAC) address of the device
+- (BOOL) protected;  // is the device password- or passcode-protected?
+@property BOOL selected;  // is the device currently selected?
+@property (readonly) BOOL supportsAudio;  // does the device support audio playback?
+@property (readonly) BOOL supportsVideo;  // does the device support video playback?
+@property NSInteger soundVolume;  // the output volume for the device (0 = minimum, 100 = maximum)
+
+
+@end
+
+#pragma mark -
+
 // a piece of art within a track
 @interface iTunesArtwork : iTunesItem
 
@@ -224,7 +263,8 @@ typedef enum iTunesERtK iTunesERtK;
 
 @end
 
-#pragma mark
+#pragma mark -
+
 // converts a track to a specific file format
 @interface iTunesEncoder : iTunesItem
 
@@ -233,19 +273,20 @@ typedef enum iTunesERtK iTunesERtK;
 
 @end
 
-#pragma mark
+#pragma mark -
+
 // equalizer preset configuration
 @interface iTunesEQPreset : iTunesItem
 
-@property double band1;  // the equalizer 32 Hz band level (-12.0 dB to +12.0 dB)
-@property double band2;  // the equalizer 64 Hz band level (-12.0 dB to +12.0 dB)
-@property double band3;  // the equalizer 125 Hz band level (-12.0 dB to +12.0 dB)
-@property double band4;  // the equalizer 250 Hz band level (-12.0 dB to +12.0 dB)
-@property double band5;  // the equalizer 500 Hz band level (-12.0 dB to +12.0 dB)
-@property double band6;  // the equalizer 1 kHz band level (-12.0 dB to +12.0 dB)
-@property double band7;  // the equalizer 2 kHz band level (-12.0 dB to +12.0 dB)
-@property double band8;  // the equalizer 4 kHz band level (-12.0 dB to +12.0 dB)
-@property double band9;  // the equalizer 8 kHz band level (-12.0 dB to +12.0 dB)
+@property double band1;   // the equalizer 32 Hz band level (-12.0 dB to +12.0 dB)
+@property double band2;   // the equalizer 64 Hz band level (-12.0 dB to +12.0 dB)
+@property double band3;   // the equalizer 125 Hz band level (-12.0 dB to +12.0 dB)
+@property double band4;   // the equalizer 250 Hz band level (-12.0 dB to +12.0 dB)
+@property double band5;   // the equalizer 500 Hz band level (-12.0 dB to +12.0 dB)
+@property double band6;   // the equalizer 1 kHz band level (-12.0 dB to +12.0 dB)
+@property double band7;   // the equalizer 2 kHz band level (-12.0 dB to +12.0 dB)
+@property double band8;   // the equalizer 4 kHz band level (-12.0 dB to +12.0 dB)
+@property double band9;   // the equalizer 8 kHz band level (-12.0 dB to +12.0 dB)
 @property double band10;  // the equalizer 16 kHz band level (-12.0 dB to +12.0 dB)
 @property (readonly) BOOL modifiable;  // can this preset be modified?
 @property double preamp;  // the equalizer preamp level (-12.0 dB to +12.0 dB)
@@ -254,7 +295,8 @@ typedef enum iTunesERtK iTunesERtK;
 
 @end
 
-#pragma mark
+#pragma mark -
+
 // a list of songs/streams
 @interface iTunesPlaylist : iTunesItem
 
@@ -275,7 +317,8 @@ typedef enum iTunesERtK iTunesERtK;
 
 @end
 
-#pragma mark
+#pragma mark -
+
 // a playlist representing an audio CD
 @interface iTunesAudioCDPlaylist : iTunesPlaylist
 
@@ -292,16 +335,8 @@ typedef enum iTunesERtK iTunesERtK;
 
 @end
 
-#pragma mark
-// a playlist representing the contents of a portable device
-@interface iTunesDevicePlaylist : iTunesPlaylist
+#pragma mark -
 
-- (SBElementArray *) deviceTracks;
-
-
-@end
-
-#pragma mark
 // the master music library playlist
 @interface iTunesLibraryPlaylist : iTunesPlaylist
 
@@ -312,6 +347,8 @@ typedef enum iTunesERtK iTunesERtK;
 
 @end
 
+#pragma mark -
+
 // the radio tuner playlist
 @interface iTunesRadioTunerPlaylist : iTunesPlaylist
 
@@ -320,12 +357,12 @@ typedef enum iTunesERtK iTunesERtK;
 
 @end
 
-#pragma mark
+#pragma mark -
+
 // a music source (music library, CD, device, etc.)
 @interface iTunesSource : iTunesItem
 
 - (SBElementArray *) audioCDPlaylists;
-- (SBElementArray *) devicePlaylists;
 - (SBElementArray *) libraryPlaylists;
 - (SBElementArray *) playlists;
 - (SBElementArray *) radioTunerPlaylists;
@@ -340,7 +377,8 @@ typedef enum iTunesERtK iTunesERtK;
 
 @end
 
-#pragma mark
+#pragma mark -
+
 // playable audio source
 @interface iTunesTrack : iTunesItem
 
@@ -373,6 +411,7 @@ typedef enum iTunesERtK iTunesERtK;
 @property BOOL gapless;  // is this track from a gapless album?
 @property (copy) NSString *genre;  // the music/audio genre (category) of the track
 @property (copy) NSString *grouping;  // the grouping (piece) of the track. Generally used to denote movements within a classical work.
+@property (readonly) BOOL iTunesU;  // is this track an iTunes U episode?
 @property (copy, readonly) NSString *kind;  // a text description of the track
 @property (copy) NSString *longDescription;
 @property (copy) NSString *lyrics;  // the lyrics of the track
@@ -395,7 +434,7 @@ typedef enum iTunesERtK iTunesERtK;
 @property (copy) NSString *sortName;  // override string to use for the track when sorting by name
 @property (copy) NSString *sortComposer;  // override string to use for the track when sorting by composer
 @property (copy) NSString *sortShow;  // override string to use for the track when sorting by show name
-@property (readonly) NSInteger size;  // the size of the track (in bytes)
+@property (readonly) long long size;  // the size of the track (in bytes)
 @property double start;  // the start time of the track in seconds
 @property (copy, readonly) NSString *time;  // the length of the track in MM:SS format
 @property NSInteger trackCount;  // the total number of tracks on the source album
@@ -408,6 +447,8 @@ typedef enum iTunesERtK iTunesERtK;
 
 @end
 
+#pragma mark -
+
 // a track on an audio CD
 @interface iTunesAudioCDTrack : iTunesTrack
 
@@ -416,14 +457,8 @@ typedef enum iTunesERtK iTunesERtK;
 
 @end
 
-#pragma mark
-// a track residing on a portable music player
-@interface iTunesDeviceTrack : iTunesTrack
+#pragma mark -
 
-
-@end
-
-#pragma mark
 // a track representing an audio file (MP3, AIFF, etc.)
 @interface iTunesFileTrack : iTunesTrack
 
@@ -433,14 +468,16 @@ typedef enum iTunesERtK iTunesERtK;
 
 @end
 
-#pragma mark
+#pragma mark -
+
 // a track residing in a shared library
 @interface iTunesSharedTrack : iTunesTrack
 
 
 @end
 
-#pragma mark
+#pragma mark -
+
 // a track representing a network stream
 @interface iTunesURLTrack : iTunesTrack
 
@@ -450,7 +487,8 @@ typedef enum iTunesERtK iTunesERtK;
 
 @end
 
-#pragma mark
+#pragma mark -
+
 // custom playlists created by the user
 @interface iTunesUserPlaylist : iTunesPlaylist
 
@@ -464,21 +502,24 @@ typedef enum iTunesERtK iTunesERtK;
 
 @end
 
-#pragma mark
+#pragma mark -
+
 // a folder that contains other playlists
 @interface iTunesFolderPlaylist : iTunesUserPlaylist
 
 
 @end
 
-#pragma mark
+#pragma mark -
+
 // a visual plug-in
 @interface iTunesVisual : iTunesItem
 
 
 @end
 
-#pragma mark
+#pragma mark -
+
 // any window
 @interface iTunesWindow : iTunesItem
 
@@ -495,7 +536,8 @@ typedef enum iTunesERtK iTunesERtK;
 
 @end
 
-#pragma mark
+#pragma mark -
+
 // the main iTunes window
 @interface iTunesBrowserWindow : iTunesWindow
 
@@ -506,7 +548,8 @@ typedef enum iTunesERtK iTunesERtK;
 
 @end
 
-#pragma mark
+#pragma mark -
+
 // the iTunes equalizer window
 @interface iTunesEQWindow : iTunesWindow
 
@@ -515,7 +558,8 @@ typedef enum iTunesERtK iTunesERtK;
 
 @end
 
-#pragma mark
+#pragma mark -
+
 // a sub-window showing a single playlist
 @interface iTunesPlaylistWindow : iTunesWindow
 
