@@ -73,13 +73,6 @@
                                                                 [self setNeedsDisplay:YES];
                                                             }
                                                           repeats:YES];
-    /*  
-     self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/40
-                                                           target:self
-                                                         selector:@selector(setNeedsDisplay:)
-                                                         userInfo:nil
-                                                          repeats:YES];
-     */
 }
 
 - (void)stopAnimation{

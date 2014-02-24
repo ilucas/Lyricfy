@@ -93,7 +93,7 @@
     NSBundle *bundle = [NSBundle mainBundle];
     NSURL *scriptURL = [[NSURL alloc] initFileURLWithPath:[bundle pathForResource:@"LyricScript" ofType:@"scpt"]];
     NSAppleScript *script = [[NSAppleScript alloc] initWithContentsOfURL:scriptURL error:nil];
-    [script callHandler:@"SetLyric" withParameters:[NSNumber numberWithInteger:databeID], aLyric, nil];
+    [script callHandler:@"SetLyric" withParameters:@(databeID), aLyric, nil];
 }
 
 #pragma mark - Extern
