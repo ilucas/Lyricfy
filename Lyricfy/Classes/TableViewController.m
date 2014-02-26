@@ -195,24 +195,16 @@
     [idxArray moveObjectFromIndex:index toIndex:newIndex];
     [tableView moveRowAtIndex:index toIndex:newIndex];
     
-
-    __weak id item = [array lastObject];
-    NSInteger pos = [array indexOfObject:item];
-    NSLog(@"%ld , %ld",array.count,pos);
+    /*
+    //let's remove the last "Group Row"
+    __weak id lastItem = [array lastObject];
     
-    
-    return;
-    if ([item isKindOfClass:GroupRowItemClass()]){
-        NSInteger idx = [array count];
+    if ([lastItem isKindOfClass:GroupRowItemClass()]){
+        NSInteger idx = [array count] - 1;
         
-        //NSLog(@"idx = %ld - count = %ld",idx);
-        
-        return;
-        __weak id item2 = array[idx];
-        
-        if (item == item2)
-            NSLog(@"igual");
-        return;
+        if (![lastItem isEqualTo:array[idx]])
+            return;
+            
         [array removeObjectAtIndex:idx];
         [idxArray removeObjectAtIndex:idx];
         [tableView removeRowAtIndex:idx];

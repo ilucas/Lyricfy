@@ -605,7 +605,7 @@
         <window title="Lyricfy" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="371" customClass="INAppStoreWindow">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="163" y="278" width="900" height="500"/>
+            <rect key="contentRect" x="142" y="267" width="900" height="500"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
             <value key="minSize" type="size" width="900" height="500"/>
             <view key="contentView" id="372">
@@ -835,7 +835,7 @@
                         </connections>
                     </splitView>
                     <button verticalHuggingPriority="750" id="1073">
-                        <rect key="frame" x="228" y="2" width="66" height="25"/>
+                        <rect key="frame" x="228" y="3" width="66" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="roundTextured" title="Aplly All" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1074">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>

@@ -65,7 +65,7 @@
             return;
     }
     
-    if (_track)
+    if (_track)// know bug
         [_track setLyrics:aLyric];
     else
         [self performSelectorInBackground:@selector(applyLyricUsingAppleScript:) withObject:aLyric];
@@ -88,7 +88,7 @@
 #pragma mark - AppleScript
 
 - (void)applyLyricUsingAppleScript:(NSString *)aLyric{
-    NSLog(@"Apply lyric using AppleScript");
+    //NSLog(@"Apply lyric using AppleScript");
     //return;
     NSBundle *bundle = [NSBundle mainBundle];
     NSURL *scriptURL = [[NSURL alloc] initFileURLWithPath:[bundle pathForResource:@"LyricScript" ofType:@"scpt"]];

@@ -8,6 +8,7 @@
 //
 
 #import "AppController.h"
+#import "AppController+Debug.h"
 #import "iTunes.h"
 #import "ITrack.h"
 #import "lyricDownloader.h"
@@ -63,7 +64,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSApplicationDidFinishLaunchingNotification object:nil];
         
 #if DEBUG
-    #import "AppController+Debug.h"
     [self activateDebugMenu];
 #endif
     
@@ -108,12 +108,12 @@
 #pragma mark - lyricDownloaderDelegate
 
 - (void)lyricDownloader:(lyricDownloader *)lyricDownloader WillBeginProcessingTrack:(ITrack *)track{
-    NSInteger index = [tableViewController.idxArray indexOfObject:@(track.databeID)];
+    NSInteger index = [[tableViewController idxArray] indexOfObject:@(track.databeID)];
     [tableViewController startRowAnimationAtIndex:index];
 }
 
 - (void)lyricDownloader:(lyricDownloader *)lyricDownloader didFinishedDownloadingLyricForTrack:(ITrack *)track withResponseCode:(NSInteger)responseCode{
-    NSInteger index = [tableViewController.idxArray indexOfObject:@(track.databeID)];
+    NSInteger index = [[tableViewController idxArray] indexOfObject:@(track.databeID)];
     [tableViewController stopRowAnimationAtIndex:index];
     
     if (responseCode == 200)
@@ -126,7 +126,7 @@
 
 - (void)applyLyric:(ITSource)source forTrack:(ITrack *)track{
     [track setNewLyric:source];
-    NSInteger index = [tableViewController.tableView selectedRow];
+    NSInteger index = [[tableViewController tableView] selectedRow];
     [tableViewController removeTrackAtIndex:index];
 }
 
