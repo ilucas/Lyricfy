@@ -34,8 +34,8 @@ static const CGFloat SVmaxConstrain = 470.0;
     [window setTitleBarHeight:40.0];
     [window setTrafficLightButtonsLeftMargin:12.0];
     
-    KGNoiseView __weak *tableSide = [[splitView subviews] objectAtIndex:0];
-    KGNoiseView __weak *editorSide = [[splitView subviews] objectAtIndex:1];
+    KGNoiseView __weak *tableSide = [splitView subviews][0];
+    KGNoiseView __weak *editorSide = [splitView subviews][1];
     
     [editorSide setBackgroundColor:[NSColor windowBackgroundColor]];
     [editorSide setNoiseOpacity:0.3];
@@ -70,20 +70,18 @@ static const CGFloat SVmaxConstrain = 470.0;
 
 - (CGFloat)splitView:(NSSplitView *)sender constrainMinCoordinate:(CGFloat)proposedMinimumPosition ofSubviewAt:(NSInteger)dividerIndex{
     return SVminConstrain;
-    //return lockedPositionForSplitView(sender);
 }
 
 - (CGFloat)splitView:(NSSplitView *)sender constrainMaxCoordinate:(CGFloat)proposedMaximumPosition ofSubviewAt:(NSInteger)dividerIndex{
     return SVmaxConstrain;
-    //return lockedPositionForSplitView(sender);
 }
 
 - (void)splitView:(NSSplitView *)sender resizeSubviewsWithOldSize:(NSSize)oldSize{
     if ([sender inLiveResize]){
         NSRect tmpRect = [sender bounds];
         NSArray *subviews = [sender subviews];
-        NSView *tableSide = [subviews objectAtIndex:0];
-        NSView *editorSide = [subviews objectAtIndex:1];
+        NSView *tableSide = subviews[0];
+        NSView *editorSide = subviews[1];
         
         CGFloat tableWidth = tableSide.bounds.size.width;
         
@@ -104,7 +102,7 @@ static const CGFloat SVmaxConstrain = 470.0;
     [[applyAllButton superview] setNeedsDisplay:YES];
     
     NSRect oldFrame = [applyAllButton frame];
-    NSView *tableSide = [[splitView subviews] objectAtIndex:0];
+    NSView *tableSide = [splitView subviews][0];
     
     CGFloat newOriginX = tableSide.frame.size.width - applyAllButton.frame.size.width;
     NSRect newFrame = NSMakeRect(newOriginX, oldFrame.origin.y, oldFrame.size.width, oldFrame.size.height);
@@ -114,7 +112,7 @@ static const CGFloat SVmaxConstrain = 470.0;
 }
 
 CGFloat lockedPositionForSplitView(NSSplitView *sender) {
-    NSRect frame = [[[sender subviews] objectAtIndex:0] frame];
+    NSRect frame = [[sender subviews][0] frame];
     return frame.size.width;
 }
 

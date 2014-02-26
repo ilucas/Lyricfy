@@ -100,20 +100,20 @@
 }
 
 - (SBElementArray *)musicPlayList{
-    iTunesSource *sauce = [[iTunesApp sources] objectAtIndex:0];
-    iTunesPlaylist *library = [[sauce playlists] objectAtIndex:1];
+    iTunesSource *sauce = [iTunesApp sources][0];
+    iTunesPlaylist *library = [sauce playlists][1];
     return [library tracks];
 }
 
 #pragma mark - lyricDownloaderDelegate
 
 - (void)lyricDownloader:(lyricDownloader *)lyricDownloader WillBeginProcessingTrack:(ITrack *)track{
-    NSInteger index = [tableViewController.idxArray indexOfObject:[NSNumber numberWithInteger:track.databeID]];
+    NSInteger index = [[tableViewController idxArray] indexOfObject:@(track.databeID)];
     [tableViewController startRowAnimationAtIndex:index];
 }
 
 - (void)lyricDownloader:(lyricDownloader *)lyricDownloader didFinishedDownloadingLyricForTrack:(ITrack *)track withResponseCode:(NSInteger)responseCode{
-    NSInteger index = [tableViewController.idxArray indexOfObject:[NSNumber numberWithInteger:track.databeID]];
+    NSInteger index = [[tableViewController idxArray] indexOfObject:@(track.databeID)];
     [tableViewController stopRowAnimationAtIndex:index];
     
     if (responseCode == 200)
@@ -126,7 +126,7 @@
 
 - (void)applyLyric:(ITSource)source forTrack:(ITrack *)track{
     [track setNewLyric:source];
-    NSInteger index = [tableViewController.tableView selectedRow];
+    NSInteger index = [[tableViewController tableView] selectedRow];
     [tableViewController removeTrackAtIndex:index];
 }
 

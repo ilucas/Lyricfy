@@ -27,4 +27,3 @@
 - (void)insertRowAtIndex:(NSInteger)index withAnimation:(NSTableViewAnimationOptions)animationOptions;
 
 @end
-//http://jwilling.com/post/40530077255/optimized-scrolling-in-a-view-based-nstableview

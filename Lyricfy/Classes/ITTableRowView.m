@@ -31,7 +31,7 @@
         separatorRect.size.height = 1;
         
         NSColor *targetColor = [NSColor colorWithSRGBRed:.80 green:.80 blue:.80 alpha:1];
-        NSArray *colors = [NSArray arrayWithObjects:[targetColor colorWithAlphaComponent:0], targetColor, targetColor, [targetColor colorWithAlphaComponent:0], nil];
+        NSArray *colors = @[[targetColor colorWithAlphaComponent:0], targetColor, targetColor, [targetColor colorWithAlphaComponent:0]];
         CGFloat locations[4] = { 0.0, 0.4, 0.7, 1.0 };
         NSGradient *gradient = [[NSGradient alloc] initWithColors:colors atLocations:locations colorSpace:[NSColorSpace sRGBColorSpace]];
         [gradient drawInRect:separatorRect angle:0];

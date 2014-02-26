@@ -40,7 +40,7 @@
         [tableView setFloatsGroupRows:YES];
 
         //Initialize the groupRow
-        groupRow[0] = [[GroupRowItem alloc] initWithTitle:@"Main"];
+        groupRow[0] = [[GroupRowItem alloc] initWithTitle:@"Finished"];
         groupRow[1] = [[GroupRowItem alloc] initWithTitle:@"Queue"];
     }
     return self;
@@ -60,7 +60,7 @@
 - (void)tableViewSelectionDidChange:(NSNotification *)notification{
     NSInteger row = [tableView selectedRow];
     if (row != -1){
-        ITrack *track = [array objectAtIndex:row];
+        ITrack *track = array[row];
         if ([track passedTheQueue])
             [lyricEditorController setupLyricEditorWithTrack:track];
     }else{
@@ -69,26 +69,26 @@
 }
 
 - (BOOL)tableView:(NSTableView *)sender isGroupRow:(NSInteger)row{
-    __weak id item = [array objectAtIndex:row];
+    __weak id item = array[row];
     return [item isKindOfClass:GroupRowItemClass()];
 }
 
 //The "group rows" and unfinished downloads can't be selected
 - (BOOL)tableView:(NSTableView *)sender shouldSelectRow:(NSInteger)row{
-    __weak id item = [array objectAtIndex:row];
+    __weak id item = array[row];
     //return ![item isKindOfClass:GroupRowItemClass()];
     return ([item isKindOfClass:GroupRowItemClass()] ? NO : [item passedTheQueue]);
 }
 
 //The "group rows" have a small height, while all other rows have a larger height
 - (CGFloat)tableView:(NSTableView *)sender heightOfRow:(NSInteger)row{
-    __weak id item = [array objectAtIndex:row];
+    __weak id item = array[row];
     static const CGFloat GroupRowHeight = 20.0;
     return ([item isKindOfClass:GroupRowItemClass()] ? GroupRowHeight : sender.rowHeight);
 }
 
 - (NSView *)tableView:(NSTableView *)sender viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row{
-    __weak id item = [array objectAtIndex:row];
+    __weak id item = array[row];
     if ([item isKindOfClass:GroupRowItemClass()]){
         NSTableCellView *cellView = [sender makeViewWithIdentifier:kGroupCellIdentifier owner:self];
         [cellView.textField.cell setBackgroundStyle:NSBackgroundStyleRaised];
@@ -110,7 +110,7 @@
 #pragma mark - Public
 
 - (ITrack *)addTrack:(iTunesTrack *)track{
-    NSNumber *databaseID = [NSNumber numberWithInteger:track.databaseID];
+    NSNumber *databaseID = @(track.databaseID);
     if (![idxArray containsObject:databaseID]){//check if the track isn't in the queue
         ITrack *_track = [[ITrack alloc] initWithiTunesTrack:track];
         if ([array isEmpty]){
@@ -126,7 +126,7 @@
 }
 
 - (void)removeTrackAtIndex:(NSInteger)index{
-    if ([[array objectAtIndex:index] isKindOfClass:GroupRowItemClass()])
+    if ([array[index] isKindOfClass:GroupRowItemClass()])
         return;//only remove tracks
     
     //NSLog(@"RTAI: %@",([NSThread isMainThread] ? @"main thread": @"other thread" ));
@@ -138,7 +138,7 @@
     groupRow[1].location -= 1;//up 1 position
     
     NSInteger position = groupRow[0].location + 1;
-    __weak id item = [array objectAtIndex:position];
+    __weak id item = array[position];
     
     if ([item isKindOfClass:GroupRowItemClass()]){
         [idxArray removeObjectAtIndex:position];
@@ -195,24 +195,16 @@
     [idxArray moveObjectFromIndex:index toIndex:newIndex];
     [tableView moveRowAtIndex:index toIndex:newIndex];
     
-
-    __weak id item = [array lastObject];
-    NSInteger pos = [array indexOfObject:item];
-    NSLog(@"%ld , %ld",array.count,pos);
+    /*
+    //let's remove the last "Group Row"
+    __weak id lastItem = [array lastObject];
     
-    
-    return;
-    if ([item isKindOfClass:GroupRowItemClass()]){
-        NSInteger idx = [array count];
+    if ([lastItem isKindOfClass:GroupRowItemClass()]){
+        NSInteger idx = [array count] - 1;
         
-        //NSLog(@"idx = %ld - count = %ld",idx);
-        
-        return;
-        __weak id item2 = [array objectAtIndex:idx];
-        
-        if (item == item2)
-            NSLog(@"igual");
-        return;
+        if (![lastItem isEqualTo:array[idx]])
+            return;
+            
         [array removeObjectAtIndex:idx];
         [idxArray removeObjectAtIndex:idx];
         [tableView removeRowAtIndex:idx];
