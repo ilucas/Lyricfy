@@ -195,7 +195,7 @@
     [idxArray moveObjectFromIndex:index toIndex:newIndex];
     [tableView moveRowAtIndex:index toIndex:newIndex];
     
-    /*
+    
     //let's remove the last "Group Row"
     __weak id lastItem = [array lastObject];
     
